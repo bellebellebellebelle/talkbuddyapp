@@ -396,3 +396,54 @@
 }
 .angelo * { border-color: var(--border); }
 .modal { background: oklch(.17 .04 20 / .92); }
+
+/* ===== OCKTAVUS — Google Workspace agent (scoped in .ock-theme) ===== */
+.ock-theme {
+  --radius: 1rem;
+  --background: oklch(0.27 0.08 305); --foreground: oklch(0.97 0.015 80);
+  --card: oklch(0.32 0.08 305); --card-foreground: oklch(0.97 0.015 80);
+  --popover: oklch(0.30 0.08 305); --popover-foreground: oklch(0.97 0.015 80);
+  --primary: oklch(0.75 0.18 45); --primary-foreground: oklch(0.18 0.03 305);
+  --secondary: oklch(0.36 0.08 305); --secondary-foreground: oklch(0.97 0.015 80);
+  --muted: oklch(0.34 0.07 305); --muted-foreground: oklch(0.78 0.04 80);
+  --accent: oklch(0.85 0.16 85); --accent-foreground: oklch(0.20 0.04 305);
+  --destructive: oklch(0.65 0.24 25); --destructive-foreground: oklch(0.98 0.01 240);
+  --border: oklch(0.42 0.07 305 / 0.6); --input: oklch(0.36 0.08 305); --ring: oklch(0.75 0.18 45);
+  --holo: oklch(0.75 0.18 45); --holo-2: oklch(0.85 0.16 85); --violet: oklch(0.62 0.20 305);
+  --sidebar: oklch(0.23 0.08 305); --sidebar-foreground: oklch(0.92 0.02 80);
+  --sidebar-primary: oklch(0.75 0.18 45); --sidebar-primary-foreground: oklch(0.18 0.03 305);
+  --sidebar-accent: oklch(0.32 0.08 305); --sidebar-accent-foreground: oklch(0.97 0.015 80);
+  --sidebar-border: oklch(0.38 0.07 305 / 0.6); --sidebar-ring: oklch(0.75 0.18 45);
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  min-height: 100vh;
+  color: var(--foreground);
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  background-image:
+    radial-gradient(48rem 28rem at 12% -8%, oklch(0.75 0.18 45 / 0.22), transparent 60%),
+    radial-gradient(40rem 28rem at 108% 8%, oklch(0.85 0.16 85 / 0.18), transparent 60%),
+    radial-gradient(60rem 36rem at 50% 110%, oklch(0.62 0.20 305 / 0.25), transparent 60%),
+    linear-gradient(180deg, oklch(0.27 0.08 305) 0%, oklch(0.22 0.07 305) 100%);
+}
+.ock-theme * { border-color: var(--border); }
+.ock-theme h1, .ock-theme h2, .ock-theme h3, .ock-theme h4, .ock-theme .font-display { font-family: var(--font-display); letter-spacing: -0.01em; }
+@utility ock-glass { background: linear-gradient(180deg, oklch(1 0 0 / 0.06), oklch(1 0 0 / 0.02)); backdrop-filter: blur(18px) saturate(140%); border: 1px solid oklch(1 0 0 / 0.10); }
+@utility bento { background: linear-gradient(180deg, oklch(1 0 0 / 0.07), oklch(1 0 0 / 0.02)); backdrop-filter: blur(20px) saturate(140%); border: 1px solid oklch(1 0 0 / 0.10); border-radius: 1.25rem; box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.08), 0 18px 40px -24px oklch(0 0 0 / 0.6); }
+@utility ock-holo-text { background: linear-gradient(90deg, var(--holo), var(--holo-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@utility neon-text { background: linear-gradient(90deg, var(--holo), var(--holo-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@utility ock-holo-border { border: 1px solid transparent; background: linear-gradient(var(--card), var(--card)) padding-box, linear-gradient(135deg, var(--holo), var(--holo-2)) border-box; }
+@utility holo-glow { box-shadow: 0 0 0 1px oklch(0.75 0.18 45 / 0.35), 0 0 24px oklch(0.75 0.18 45 / 0.45), 0 0 60px oklch(0.85 0.16 85 / 0.25); }
+@utility neon-glow { box-shadow: 0 0 0 1px oklch(0.75 0.18 45 / 0.35), 0 0 24px oklch(0.75 0.18 45 / 0.45), 0 0 60px oklch(0.85 0.16 85 / 0.25); }
+@keyframes ock-pulse-dot { 0%, 100% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+.dot-pulse { animation: ock-pulse-dot 1.2s ease-in-out infinite; }
+@keyframes ock-voice-ring { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.8); opacity: 0; } }
+.voice-ring { animation: ock-voice-ring 1.6s ease-out infinite; }
+@keyframes ock-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.shimmer { background: linear-gradient(90deg, transparent 30%, oklch(1 0 0 / 0.08) 50%, transparent 70%); background-size: 200% 100%; animation: ock-shimmer 2.2s linear infinite; }
+.lab-theme .settings-tabs { display: flex; gap: .5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.lab-theme .settings-tab { padding: .5rem .9rem; font-size: .8rem; color: var(--muted-foreground); border-bottom: 2px solid transparent; }
+.lab-theme .settings-tab.active { color: var(--foreground); border-bottom-color: var(--primary); }
+.lab-theme .google-panel { display: flex; flex-direction: column; gap: .75rem; max-width: 40rem; }
+.lab-theme .google-status { display: flex; align-items: center; gap: .4rem; }
+.lab-theme .google-status.ok svg { color: var(--green); }
+.lab-theme .google-services { display: flex; flex-wrap: wrap; gap: .4rem; }
+.lab-theme .google-services span { display: inline-flex; align-items: center; gap: .3rem; font-size: .7rem; padding: .2rem .55rem; border: 1px solid var(--border); border-radius: 999px; color: var(--muted-foreground); }

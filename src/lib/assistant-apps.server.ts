@@ -1,6 +1,10 @@
 import { z } from "zod";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { applications } from "./laboratory";
+import { buildAllTools } from "./google-tools.server";
+
+// Names + descriptions of every Google Workspace tool (Gmail, Agenda, Drive, Docs, Sheets, Slides, Forms, Tâches, Contacts, Blogger).
+const googleToolCatalog = Object.entries(buildAllTools("00000000-0000-0000-0000-000000000000", "voice")).map(([name, t]) => ({ name, description: (t as { description?: string }).description ?? "" }));
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Ctx = { db: SupabaseClient<any, "public", any>; userId: string };
@@ -12,6 +16,34 @@ type Action = { description: string; input: z.ZodObject<any>; run: (ctx: Ctx, in
  * add an entry here with the app's key to let the assistant perform tasks in it.
  */
 const appActions: Record<string, Record<string, Action>> = {
+  ocktavus: {
+    outils_google: {
+      description: "Lister tous les outils Google Workspace disponibles (nom, description). À appeler avant executer_google si tu ne connais pas le nom exact ou les paramètres.",
+      input: z.object({}),
+      run: async () => googleToolCatalog,
+    },
+    executer_google: {
+      description: `Exécuter réellement une tâche Google (Gmail, Agenda, Drive, Docs, Sheets, Slides, Forms, Tâches, Contacts, Blogger) avec la connexion Google partagée de l'utilisateur. input = { outil, parametres }. Outils : ${googleToolCatalog.map((t) => t.name).join(", ")}.`,
+      input: z.object({ outil: z.string(), parametres: z.record(z.any()).optional() }),
+      run: async ({ db, userId }, i) => {
+        const { data: conn } = await db.from("gmail_connection_status").select("google_email").maybeSingle();
+        if (!conn) return "Aucun compte Google connecté. Demande à l'utilisateur d'aller dans Paramètres → Connexion Google.";
+        const { data: settings } = await db.from("user_settings").select("timezone,email_greeting,email_signature,email_tone").eq("user_id", userId).maybeSingle();
+        const tools = buildAllTools(userId, "voice", {
+          timezone: settings?.timezone ?? "Indian/Reunion",
+          emailGreeting: settings?.email_greeting,
+          emailSignature: settings?.email_signature,
+          emailTone: settings?.email_tone,
+          taskId: crypto.randomUUID(),
+        }) as Record<string, { inputSchema?: z.ZodTypeAny; execute?: (args: unknown, opts: unknown) => Promise<unknown> }>;
+        const t = tools[i.outil];
+        if (!t?.execute) return { error: `Outil inconnu « ${i.outil} ». Outils : ${Object.keys(tools).join(", ")}` };
+        const parsed = t.inputSchema && "safeParse" in t.inputSchema ? t.inputSchema.safeParse(i.parametres ?? {}) : { success: true as const, data: i.parametres ?? {} };
+        if (!parsed.success) return { error: `Paramètres invalides : ${parsed.error.message}` };
+        return t.execute(parsed.data, { toolCallId: crypto.randomUUID(), messages: [] });
+      },
+    },
+  },
   lab: {
     lire_donnees: {
       description: "Lire les idées et l'activité récentes de l'utilisateur.",
