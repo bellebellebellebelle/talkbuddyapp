@@ -439,3 +439,11 @@
 .voice-ring { animation: ock-voice-ring 1.6s ease-out infinite; }
 @keyframes ock-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 .shimmer { background: linear-gradient(90deg, transparent 30%, oklch(1 0 0 / 0.08) 50%, transparent 70%); background-size: 200% 100%; animation: ock-shimmer 2.2s linear infinite; }
+.lab-theme .settings-tabs { display: flex; gap: .5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.lab-theme .settings-tab { padding: .5rem .9rem; font-size: .8rem; color: var(--muted-foreground); border-bottom: 2px solid transparent; }
+.lab-theme .settings-tab.active { color: var(--foreground); border-bottom-color: var(--primary); }
+.lab-theme .google-panel { display: flex; flex-direction: column; gap: .75rem; max-width: 40rem; }
+.lab-theme .google-status { display: flex; align-items: center; gap: .4rem; }
+.lab-theme .google-status.ok svg { color: var(--green); }
+.lab-theme .google-services { display: flex; flex-wrap: wrap; gap: .4rem; }
+.lab-theme .google-services span { display: inline-flex; align-items: center; gap: .3rem; font-size: .7rem; padding: .2rem .55rem; border: 1px solid var(--border); border-radius: 999px; color: var(--muted-foreground); }
