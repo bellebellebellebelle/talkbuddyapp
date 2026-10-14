@@ -14,13 +14,540 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      angelo_settings: {
+        Row: {
+          agent_name: string
+          attach_pdf: boolean
+          auto_send: boolean
+          cc_emails: string
+          company_name: string | null
+          excluded_partners: string
+          extra_instructions: string
+          language: string
+          legal_text: string
+          min_amount: number
+          min_days_between_reminders: number
+          signature: string
+          tone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agent_name?: string
+          attach_pdf?: boolean
+          auto_send?: boolean
+          cc_emails?: string
+          company_name?: string | null
+          excluded_partners?: string
+          extra_instructions?: string
+          language?: string
+          legal_text?: string
+          min_amount?: number
+          min_days_between_reminders?: number
+          signature?: string
+          tone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          agent_name?: string
+          attach_pdf?: boolean
+          auto_send?: boolean
+          cc_emails?: string
+          company_name?: string | null
+          excluded_partners?: string
+          extra_instructions?: string
+          language?: string
+          legal_text?: string
+          min_amount?: number
+          min_days_between_reminders?: number
+          signature?: string
+          tone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      cron_logs: {
+        Row: {
+          created_at: string
+          duration_ms: number
+          frequency: string | null
+          id: string
+          invoices_found: number
+          overdue_found: number
+          reason: string | null
+          reminders_sent: number
+          status: string
+          trigger: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          duration_ms?: number
+          frequency?: string | null
+          id?: string
+          invoices_found?: number
+          overdue_found?: number
+          reason?: string | null
+          reminders_sent?: number
+          status?: string
+          trigger?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          duration_ms?: number
+          frequency?: string | null
+          id?: string
+          invoices_found?: number
+          overdue_found?: number
+          reason?: string | null
+          reminders_sent?: number
+          status?: string
+          trigger?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      cron_tokens: {
+        Row: {
+          id: number
+          token: string
+        }
+        Insert: {
+          id?: number
+          token: string
+        }
+        Update: {
+          id?: number
+          token?: string
+        }
+        Relationships: []
+      }
+      ideas: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          title: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      invoices_cache: {
+        Row: {
+          amount_residual: number
+          amount_total: number
+          currency: string | null
+          due_date: string | null
+          id: string
+          invoice_date: string | null
+          last_reminder_at: string | null
+          last_reminder_level: number | null
+          name: string
+          odoo_id: number
+          partner_email: string | null
+          partner_id: number | null
+          partner_name: string | null
+          payment_state: string | null
+          reminder_count: number
+          sale_orders: string | null
+          synced_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_residual?: number
+          amount_total?: number
+          currency?: string | null
+          due_date?: string | null
+          id?: string
+          invoice_date?: string | null
+          last_reminder_at?: string | null
+          last_reminder_level?: number | null
+          name: string
+          odoo_id: number
+          partner_email?: string | null
+          partner_id?: number | null
+          partner_name?: string | null
+          payment_state?: string | null
+          reminder_count?: number
+          sale_orders?: string | null
+          synced_at?: string
+          user_id?: string
+        }
+        Update: {
+          amount_residual?: number
+          amount_total?: number
+          currency?: string | null
+          due_date?: string | null
+          id?: string
+          invoice_date?: string | null
+          last_reminder_at?: string | null
+          last_reminder_level?: number | null
+          name?: string
+          odoo_id?: number
+          partner_email?: string | null
+          partner_id?: number | null
+          partner_name?: string | null
+          payment_state?: string | null
+          reminder_count?: number
+          sale_orders?: string | null
+          synced_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      lab_activity: {
+        Row: {
+          app_key: string | null
+          created_at: string
+          id: string
+          kind: string
+          seconds_saved: number
+          user_id: string
+        }
+        Insert: {
+          app_key?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          seconds_saved?: number
+          user_id?: string
+        }
+        Update: {
+          app_key?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          seconds_saved?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      meetings: {
+        Row: {
+          actions: Json
+          category: string
+          created_at: string
+          decisions: Json
+          duration_min: number
+          id: string
+          meeting_date: string
+          next_steps: Json
+          participants: Json
+          risks: Json
+          score_clarity: number
+          score_decision: number
+          score_efficiency: number
+          score_engagement: number
+          score_global: number
+          sentiment: string
+          summary: string
+          title: string
+          topics: Json
+          transcript: string
+          user_id: string
+        }
+        Insert: {
+          actions?: Json
+          category?: string
+          created_at?: string
+          decisions?: Json
+          duration_min?: number
+          id?: string
+          meeting_date?: string
+          next_steps?: Json
+          participants?: Json
+          risks?: Json
+          score_clarity?: number
+          score_decision?: number
+          score_efficiency?: number
+          score_engagement?: number
+          score_global?: number
+          sentiment?: string
+          summary?: string
+          title?: string
+          topics?: Json
+          transcript?: string
+          user_id?: string
+        }
+        Update: {
+          actions?: Json
+          category?: string
+          created_at?: string
+          decisions?: Json
+          duration_min?: number
+          id?: string
+          meeting_date?: string
+          next_steps?: Json
+          participants?: Json
+          risks?: Json
+          score_clarity?: number
+          score_decision?: number
+          score_efficiency?: number
+          score_engagement?: number
+          score_global?: number
+          sentiment?: string
+          summary?: string
+          title?: string
+          topics?: Json
+          transcript?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          board: Json | null
+          content: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          board?: Json | null
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id?: string
+        }
+        Update: {
+          board?: Json | null
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      odoo_connections: {
+        Row: {
+          api_key: string
+          db: string
+          last_tested_at: string | null
+          modules: Json
+          status: string
+          status_message: string | null
+          uid: number | null
+          updated_at: string
+          url: string
+          user_id: string
+          username: string
+        }
+        Insert: {
+          api_key: string
+          db: string
+          last_tested_at?: string | null
+          modules?: Json
+          status?: string
+          status_message?: string | null
+          uid?: number | null
+          updated_at?: string
+          url: string
+          user_id: string
+          username: string
+        }
+        Update: {
+          api_key?: string
+          db?: string
+          last_tested_at?: string | null
+          modules?: Json
+          status?: string
+          status_message?: string | null
+          uid?: number | null
+          updated_at?: string
+          url?: string
+          user_id?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      reminder_logs: {
+        Row: {
+          amount_residual: number | null
+          body: string | null
+          created_at: string
+          days_overdue: number | null
+          error: string | null
+          id: string
+          invoice_name: string | null
+          invoice_odoo_id: number | null
+          level: number | null
+          partner_email: string | null
+          partner_name: string | null
+          status: string
+          subject: string | null
+          user_id: string
+        }
+        Insert: {
+          amount_residual?: number | null
+          body?: string | null
+          created_at?: string
+          days_overdue?: number | null
+          error?: string | null
+          id?: string
+          invoice_name?: string | null
+          invoice_odoo_id?: number | null
+          level?: number | null
+          partner_email?: string | null
+          partner_name?: string | null
+          status?: string
+          subject?: string | null
+          user_id?: string
+        }
+        Update: {
+          amount_residual?: number | null
+          body?: string | null
+          created_at?: string
+          days_overdue?: number | null
+          error?: string | null
+          id?: string
+          invoice_name?: string | null
+          invoice_odoo_id?: number | null
+          level?: number | null
+          partner_email?: string | null
+          partner_name?: string | null
+          status?: string
+          subject?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reminder_rules: {
+        Row: {
+          active: boolean
+          created_at: string
+          days_overdue: number
+          firmness: string
+          id: string
+          instructions: string
+          level: number
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          days_overdue: number
+          firmness?: string
+          id?: string
+          instructions?: string
+          level: number
+          user_id?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          days_overdue?: number
+          firmness?: string
+          id?: string
+          instructions?: string
+          level?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      run_logs: {
+        Row: {
+          finished_at: string | null
+          id: string
+          invoices_found: number
+          message: string | null
+          overdue_found: number
+          reminders_sent: number
+          started_at: string
+          status: string
+          trigger: string
+          user_id: string
+        }
+        Insert: {
+          finished_at?: string | null
+          id?: string
+          invoices_found?: number
+          message?: string | null
+          overdue_found?: number
+          reminders_sent?: number
+          started_at?: string
+          status?: string
+          trigger?: string
+          user_id?: string
+        }
+        Update: {
+          finished_at?: string | null
+          id?: string
+          invoices_found?: number
+          message?: string | null
+          overdue_found?: number
+          reminders_sent?: number
+          started_at?: string
+          status?: string
+          trigger?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      schedules: {
+        Row: {
+          day_of_month: number
+          enabled: boolean
+          frequency: string
+          hour_utc: number
+          interval_minutes: number
+          last_run_at: string | null
+          minute_utc: number
+          updated_at: string
+          user_id: string
+          weekday: number
+        }
+        Insert: {
+          day_of_month?: number
+          enabled?: boolean
+          frequency?: string
+          hour_utc?: number
+          interval_minutes?: number
+          last_run_at?: string | null
+          minute_utc?: number
+          updated_at?: string
+          user_id?: string
+          weekday?: number
+        }
+        Update: {
+          day_of_month?: number
+          enabled?: boolean
+          frequency?: string
+          hour_utc?: number
+          interval_minutes?: number
+          last_run_at?: string | null
+          minute_utc?: number
+          updated_at?: string
+          user_id?: string
+          weekday?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      angelo_init_user: { Args: { _uid: string }; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
