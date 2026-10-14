@@ -184,3 +184,33 @@ export function encodeRawEmail(opts: {
     .join("\r\n");
   return b64urlEncode(lines);
 }
+
+// ---- Signed OAuth state (prevents attaching a Google account to someone else's user) ----
+async function hmacKey() {
+  const secret = process.env.GOOGLE_CLIENT_SECRET;
+  if (!secret) throw new Error("GOOGLE_CLIENT_SECRET manquant");
+  return crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign", "verify"]);
+}
+function toB64url(bytes: Uint8Array) {
+  let s = "";
+  for (const b of bytes) s += String.fromCharCode(b);
+  return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+function fromB64url(s: string) {
+  const bin = atob(s.replace(/-/g, "+").replace(/_/g, "/"));
+  return Uint8Array.from(bin, (c) => c.charCodeAt(0));
+}
+export async function signOAuthState(payload: { uid: string; ret: string }) {
+  const body = toB64url(new TextEncoder().encode(JSON.stringify({ ...payload, t: Date.now() })));
+  const sig = new Uint8Array(await crypto.subtle.sign("HMAC", await hmacKey(), new TextEncoder().encode(body)));
+  return `${body}.${toB64url(sig)}`;
+}
+export async function verifyOAuthState(state: string): Promise<{ uid: string; ret: string }> {
+  const [body, sig] = state.split(".");
+  if (!body || !sig) throw new Error("state invalide");
+  const ok = await crypto.subtle.verify("HMAC", await hmacKey(), fromB64url(sig), new TextEncoder().encode(body));
+  if (!ok) throw new Error("state invalide");
+  const data = JSON.parse(new TextDecoder().decode(fromB64url(body))) as { uid: string; ret: string; t: number };
+  if (Date.now() - data.t > 15 * 60_000) throw new Error("state expiré");
+  return data;
+}

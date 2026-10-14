@@ -9,20 +9,25 @@ function getOrigin() {
   return `${proto}://${host}`;
 }
 
+/** Starts the shared Google connection (all Workspace scopes). Used by every app. */
 export const startGmailOAuth = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { buildAuthUrl } = await import("./gmail.server");
+  .inputValidator((d: { returnTo?: string } | undefined) => ({ returnTo: d?.returnTo && d.returnTo.startsWith("/") && !d.returnTo.startsWith("//") ? d.returnTo : "/settings?tab=google" }))
+  .handler(async ({ data, context }) => {
+    const { buildGoogleAuthUrl, signOAuthState } = await import("./google.server");
     const origin = getOrigin();
-    // state = base64(userId) so the public callback knows whom to attach to
-    const state = Buffer.from(JSON.stringify({ uid: context.userId, t: Date.now() })).toString("base64url");
-    return { url: buildAuthUrl(origin, state) };
+    const state = await signOAuthState({ uid: context.userId, ret: data.returnTo });
+    return { url: buildGoogleAuthUrl(origin, state), redirectUri: `${origin}/api/public/google/callback` };
   });
 
 export const disconnectGmail = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data } = await supabaseAdmin.from("gmail_credentials").select("access_token").eq("user_id", context.userId).maybeSingle();
+    if (data?.access_token) {
+      await fetch(`https://oauth2.googleapis.com/revoke?token=${encodeURIComponent(data.access_token)}`, { method: "POST" }).catch(() => null);
+    }
     await supabaseAdmin.from("gmail_credentials").delete().eq("user_id", context.userId);
     return { ok: true };
   });
@@ -31,13 +36,12 @@ export const generateChatLinkCode = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    // 6-digit code
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const n = crypto.getRandomValues(new Uint32Array(1))[0] % 900000;
+    const code = (100000 + n).toString();
     await supabaseAdmin.from("chat_link_codes").delete().eq("user_id", context.userId);
     const { error } = await supabaseAdmin.from("chat_link_codes").insert({ code, user_id: context.userId });
     if (error) throw new Error(error.message);
-    const origin = getOrigin();
-    return { code, endpoint: `${origin}/api/public/google-chat` };
+    return { code, endpoint: `${getOrigin()}/api/public/google-chat` };
   });
 
 export const unlinkChatSpace = createServerFn({ method: "POST" })
