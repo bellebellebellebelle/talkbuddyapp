@@ -1,4 +1,10 @@
-import { createFileRoute, Outlet, redirect, Link, useNavigate } from "@tanstack/react-router";
+import "@fontsource/space-grotesk/400.css";
+import "@fontsource/space-grotesk/600.css";
+import "@fontsource/space-grotesk/700.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import { createFileRoute, Outlet, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { VoiceOrb } from "@/components/VoiceOrb";
@@ -25,12 +31,7 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/ocktavus")({
-  ssr: false,
-  beforeLoad: async () => {
-    const { data } = await supabase.auth.getUser();
-    if (!data.user) throw redirect({ to: "/auth" });
-    return { user: data.user };
-  },
+  head: () => ({ meta: [{ title: "OCKTAVUS — Agent Google Workspace" }, { name: "description", content: "Agent IA qui gère Gmail, Agenda, Drive, Docs et tout votre Google Workspace." }, { property: "og:title", content: "OCKTAVUS — Agent Google Workspace" }, { property: "og:description", content: "Agent IA qui gère tout votre Google Workspace." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: AuthedLayout,
 });
 
@@ -70,7 +71,7 @@ function AuthedLayout() {
   const width = collapsed ? "w-16" : "w-64";
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="ock-theme flex h-screen overflow-hidden">
       <aside className={`${width} flex flex-col border-r border-sidebar-border bg-sidebar/80 backdrop-blur-xl transition-[width] duration-200`}>
         <div className="flex items-center justify-between px-3 py-4">
           <Link to="/ocktavus" className={`flex items-center gap-2 ${collapsed ? "justify-center w-full" : ""}`}>
@@ -117,6 +118,9 @@ function AuthedLayout() {
         </nav>
 
         <div className="border-t border-sidebar-border p-2">
+          <Link to="/dashboard" title="Retour à IDEALAB" className={`flex items-center ${collapsed ? "justify-center" : "gap-2.5"} rounded-lg px-3 py-2 text-sm text-sidebar-foreground/85 hover:bg-sidebar-accent`}>
+            <LayoutDashboard className="h-4 w-4" /> {!collapsed && "Retour à IDEALAB"}
+          </Link>
           <Link to="/ocktavus/reglages" title="Paramètres" className={`flex items-center ${collapsed ? "justify-center" : "gap-2.5"} rounded-lg px-3 py-2 text-sm text-sidebar-foreground/85 hover:bg-sidebar-accent`}>
             <SlidersHorizontal className="h-4 w-4" /> {!collapsed && "Paramètres"}
           </Link>
