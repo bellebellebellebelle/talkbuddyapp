@@ -11,7 +11,7 @@ import { z } from "zod";
 
 const search = z.object({ gmail: z.enum(["ok", "error", "no_refresh"]).optional(), msg: z.string().optional() });
 
-export const Route = createFileRoute("/_authenticated/ocktavus/ocktavus/connexions")({
+export const Route = createFileRoute("/_authenticated/ocktavus/connexions")({
   validateSearch: search,
   component: ConnectionsPage,
 });

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { SlidersHorizontal, Save, Check, Mail, Cpu } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/ocktavus/ocktavus/reglages")({ component: SettingsPage });
+export const Route = createFileRoute("/_authenticated/ocktavus/reglages")({ component: SettingsPage });
 
 const TIMEZONES = [
   "Indian/Reunion",

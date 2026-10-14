@@ -20,16 +20,37 @@ import { Route as AuthenticatedFavoritesRouteImport } from './routes/_authentica
 import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedIdeasRouteImport } from './routes/_authenticated/ideas'
 import { Route as AuthenticatedIntegrationsRouteImport } from './routes/_authenticated/integrations'
+import { Route as AuthenticatedOcktavusRouteRouteImport } from './routes/_authenticated/ocktavus/route'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedTeamRouteImport } from './routes/_authenticated/team'
 import { Route as ApiAnalyzeRouteImport } from './routes/api/analyze'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAngeloConnexionOdooRouteImport } from './routes/_authenticated/_angelo/connexion-odoo'
 import { Route as AuthenticatedAngeloFacturesRouteImport } from './routes/_authenticated/_angelo/factures'
 import { Route as AuthenticatedAngeloJournalRouteImport } from './routes/_authenticated/_angelo/journal'
 import { Route as AuthenticatedAngeloParametresRouteImport } from './routes/_authenticated/_angelo/parametres'
 import { Route as AuthenticatedAngeloTableauDeBordRouteImport } from './routes/_authenticated/_angelo/tableau-de-bord'
 import { Route as AuthenticatedMemotrackMemotrackRouteImport } from './routes/_authenticated/_memotrack/memotrack'
+import { Route as AuthenticatedOcktavusIndexRouteImport } from './routes/_authenticated/ocktavus/index'
+import { Route as AuthenticatedOcktavusAgentRouteImport } from './routes/_authenticated/ocktavus/agent'
+import { Route as AuthenticatedOcktavusBloggerRouteImport } from './routes/_authenticated/ocktavus/blogger'
+import { Route as AuthenticatedOcktavusCalendarRouteImport } from './routes/_authenticated/ocktavus/calendar'
+import { Route as AuthenticatedOcktavusConnexionsRouteImport } from './routes/_authenticated/ocktavus/connexions'
+import { Route as AuthenticatedOcktavusContactsRouteImport } from './routes/_authenticated/ocktavus/contacts'
+import { Route as AuthenticatedOcktavusDocsRouteImport } from './routes/_authenticated/ocktavus/docs'
+import { Route as AuthenticatedOcktavusDriveRouteImport } from './routes/_authenticated/ocktavus/drive'
+import { Route as AuthenticatedOcktavusFormsRouteImport } from './routes/_authenticated/ocktavus/forms'
+import { Route as AuthenticatedOcktavusGmailRouteImport } from './routes/_authenticated/ocktavus/gmail'
+import { Route as AuthenticatedOcktavusJournalRouteImport } from './routes/_authenticated/ocktavus/journal'
+import { Route as AuthenticatedOcktavusReglagesRouteImport } from './routes/_authenticated/ocktavus/reglages'
+import { Route as AuthenticatedOcktavusSheetsRouteImport } from './routes/_authenticated/ocktavus/sheets'
+import { Route as AuthenticatedOcktavusSlidesRouteImport } from './routes/_authenticated/ocktavus/slides'
+import { Route as AuthenticatedOcktavusTasksRouteImport } from './routes/_authenticated/ocktavus/tasks'
+import { Route as ApiPublicGoogleChatRouteImport } from './routes/api/public/google-chat'
 import { Route as AuthenticatedMemotrackMemoIdRouteImport } from './routes/_authenticated/_memotrack/memo.$id'
+import { Route as AuthenticatedOcktavusAgentIndexRouteImport } from './routes/_authenticated/ocktavus/agent.index'
+import { Route as AuthenticatedOcktavusAgentConversationIdRouteImport } from './routes/_authenticated/ocktavus/agent.$conversationId'
+import { Route as AuthenticatedOcktavusChatThreadIdRouteImport } from './routes/_authenticated/ocktavus/chat.$threadId'
 import { Route as ApiPublicHooksAngeloCronRouteImport } from './routes/api/public/hooks/angelo-cron'
 
 const IndexRoute = IndexRouteImport.update({
@@ -85,6 +106,12 @@ const AuthenticatedIntegrationsRoute =
     path: '/integrations',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedOcktavusRouteRoute =
+  AuthenticatedOcktavusRouteRouteImport.update({
+    id: '/ocktavus',
+    path: '/ocktavus',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -98,6 +125,11 @@ const AuthenticatedTeamRoute = AuthenticatedTeamRouteImport.update({
 const ApiAnalyzeRoute = ApiAnalyzeRouteImport.update({
   id: '/api/analyze',
   path: '/api/analyze',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAngeloConnexionOdooRoute =
@@ -136,11 +168,124 @@ const AuthenticatedMemotrackMemotrackRoute =
     path: '/memotrack',
     getParentRoute: () => AuthenticatedMemotrackRoute,
   } as any)
+const AuthenticatedOcktavusIndexRoute =
+  AuthenticatedOcktavusIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusAgentRoute =
+  AuthenticatedOcktavusAgentRouteImport.update({
+    id: '/agent',
+    path: '/agent',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusBloggerRoute =
+  AuthenticatedOcktavusBloggerRouteImport.update({
+    id: '/blogger',
+    path: '/blogger',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusCalendarRoute =
+  AuthenticatedOcktavusCalendarRouteImport.update({
+    id: '/calendar',
+    path: '/calendar',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusConnexionsRoute =
+  AuthenticatedOcktavusConnexionsRouteImport.update({
+    id: '/connexions',
+    path: '/connexions',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusContactsRoute =
+  AuthenticatedOcktavusContactsRouteImport.update({
+    id: '/contacts',
+    path: '/contacts',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusDocsRoute =
+  AuthenticatedOcktavusDocsRouteImport.update({
+    id: '/docs',
+    path: '/docs',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusDriveRoute =
+  AuthenticatedOcktavusDriveRouteImport.update({
+    id: '/drive',
+    path: '/drive',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusFormsRoute =
+  AuthenticatedOcktavusFormsRouteImport.update({
+    id: '/forms',
+    path: '/forms',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusGmailRoute =
+  AuthenticatedOcktavusGmailRouteImport.update({
+    id: '/gmail',
+    path: '/gmail',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusJournalRoute =
+  AuthenticatedOcktavusJournalRouteImport.update({
+    id: '/journal',
+    path: '/journal',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusReglagesRoute =
+  AuthenticatedOcktavusReglagesRouteImport.update({
+    id: '/reglages',
+    path: '/reglages',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusSheetsRoute =
+  AuthenticatedOcktavusSheetsRouteImport.update({
+    id: '/sheets',
+    path: '/sheets',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusSlidesRoute =
+  AuthenticatedOcktavusSlidesRouteImport.update({
+    id: '/slides',
+    path: '/slides',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const AuthenticatedOcktavusTasksRoute =
+  AuthenticatedOcktavusTasksRouteImport.update({
+    id: '/tasks',
+    path: '/tasks',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
+  } as any)
+const ApiPublicGoogleChatRoute = ApiPublicGoogleChatRouteImport.update({
+  id: '/api/public/google-chat',
+  path: '/api/public/google-chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedMemotrackMemoIdRoute =
   AuthenticatedMemotrackMemoIdRouteImport.update({
     id: '/memo/$id',
     path: '/memo/$id',
     getParentRoute: () => AuthenticatedMemotrackRoute,
+  } as any)
+const AuthenticatedOcktavusAgentIndexRoute =
+  AuthenticatedOcktavusAgentIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedOcktavusAgentRoute,
+  } as any)
+const AuthenticatedOcktavusAgentConversationIdRoute =
+  AuthenticatedOcktavusAgentConversationIdRouteImport.update({
+    id: '/$conversationId',
+    path: '/$conversationId',
+    getParentRoute: () => AuthenticatedOcktavusAgentRoute,
+  } as any)
+const AuthenticatedOcktavusChatThreadIdRoute =
+  AuthenticatedOcktavusChatThreadIdRouteImport.update({
+    id: '/chat/$threadId',
+    path: '/chat/$threadId',
+    getParentRoute: () => AuthenticatedOcktavusRouteRoute,
   } as any)
 const ApiPublicHooksAngeloCronRoute =
   ApiPublicHooksAngeloCronRouteImport.update({
@@ -152,6 +297,7 @@ const ApiPublicHooksAngeloCronRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/ocktavus': typeof AuthenticatedOcktavusRouteRouteWithChildren
   '/apps': typeof AuthenticatedAppsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
@@ -161,14 +307,34 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRoute
   '/team': typeof AuthenticatedTeamRoute
   '/api/analyze': typeof ApiAnalyzeRoute
+  '/api/chat': typeof ApiChatRoute
   '/connexion-odoo': typeof AuthenticatedAngeloConnexionOdooRoute
   '/factures': typeof AuthenticatedAngeloFacturesRoute
   '/journal': typeof AuthenticatedAngeloJournalRoute
   '/parametres': typeof AuthenticatedAngeloParametresRoute
   '/tableau-de-bord': typeof AuthenticatedAngeloTableauDeBordRoute
   '/memotrack': typeof AuthenticatedMemotrackMemotrackRoute
+  '/ocktavus/agent': typeof AuthenticatedOcktavusAgentRouteWithChildren
+  '/ocktavus/blogger': typeof AuthenticatedOcktavusBloggerRoute
+  '/ocktavus/calendar': typeof AuthenticatedOcktavusCalendarRoute
+  '/ocktavus/connexions': typeof AuthenticatedOcktavusConnexionsRoute
+  '/ocktavus/contacts': typeof AuthenticatedOcktavusContactsRoute
+  '/ocktavus/docs': typeof AuthenticatedOcktavusDocsRoute
+  '/ocktavus/drive': typeof AuthenticatedOcktavusDriveRoute
+  '/ocktavus/forms': typeof AuthenticatedOcktavusFormsRoute
+  '/ocktavus/gmail': typeof AuthenticatedOcktavusGmailRoute
+  '/ocktavus/journal': typeof AuthenticatedOcktavusJournalRoute
+  '/ocktavus/reglages': typeof AuthenticatedOcktavusReglagesRoute
+  '/ocktavus/sheets': typeof AuthenticatedOcktavusSheetsRoute
+  '/ocktavus/slides': typeof AuthenticatedOcktavusSlidesRoute
+  '/ocktavus/tasks': typeof AuthenticatedOcktavusTasksRoute
+  '/api/public/google-chat': typeof ApiPublicGoogleChatRoute
+  '/ocktavus/': typeof AuthenticatedOcktavusIndexRoute
   '/memo/$id': typeof AuthenticatedMemotrackMemoIdRoute
+  '/ocktavus/agent/$conversationId': typeof AuthenticatedOcktavusAgentConversationIdRoute
+  '/ocktavus/chat/$threadId': typeof AuthenticatedOcktavusChatThreadIdRoute
   '/api/public/hooks/angelo-cron': typeof ApiPublicHooksAngeloCronRoute
+  '/ocktavus/agent/': typeof AuthenticatedOcktavusAgentIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -182,20 +348,40 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsRoute
   '/team': typeof AuthenticatedTeamRoute
   '/api/analyze': typeof ApiAnalyzeRoute
+  '/api/chat': typeof ApiChatRoute
   '/connexion-odoo': typeof AuthenticatedAngeloConnexionOdooRoute
   '/factures': typeof AuthenticatedAngeloFacturesRoute
   '/journal': typeof AuthenticatedAngeloJournalRoute
   '/parametres': typeof AuthenticatedAngeloParametresRoute
   '/tableau-de-bord': typeof AuthenticatedAngeloTableauDeBordRoute
   '/memotrack': typeof AuthenticatedMemotrackMemotrackRoute
+  '/ocktavus/blogger': typeof AuthenticatedOcktavusBloggerRoute
+  '/ocktavus/calendar': typeof AuthenticatedOcktavusCalendarRoute
+  '/ocktavus/connexions': typeof AuthenticatedOcktavusConnexionsRoute
+  '/ocktavus/contacts': typeof AuthenticatedOcktavusContactsRoute
+  '/ocktavus/docs': typeof AuthenticatedOcktavusDocsRoute
+  '/ocktavus/drive': typeof AuthenticatedOcktavusDriveRoute
+  '/ocktavus/forms': typeof AuthenticatedOcktavusFormsRoute
+  '/ocktavus/gmail': typeof AuthenticatedOcktavusGmailRoute
+  '/ocktavus/journal': typeof AuthenticatedOcktavusJournalRoute
+  '/ocktavus/reglages': typeof AuthenticatedOcktavusReglagesRoute
+  '/ocktavus/sheets': typeof AuthenticatedOcktavusSheetsRoute
+  '/ocktavus/slides': typeof AuthenticatedOcktavusSlidesRoute
+  '/ocktavus/tasks': typeof AuthenticatedOcktavusTasksRoute
+  '/api/public/google-chat': typeof ApiPublicGoogleChatRoute
+  '/ocktavus': typeof AuthenticatedOcktavusIndexRoute
   '/memo/$id': typeof AuthenticatedMemotrackMemoIdRoute
+  '/ocktavus/agent/$conversationId': typeof AuthenticatedOcktavusAgentConversationIdRoute
+  '/ocktavus/chat/$threadId': typeof AuthenticatedOcktavusChatThreadIdRoute
   '/api/public/hooks/angelo-cron': typeof ApiPublicHooksAngeloCronRoute
+  '/ocktavus/agent': typeof AuthenticatedOcktavusAgentIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/ocktavus': typeof AuthenticatedOcktavusRouteRouteWithChildren
   '/_authenticated/_angelo': typeof AuthenticatedAngeloRouteWithChildren
   '/_authenticated/_memotrack': typeof AuthenticatedMemotrackRouteWithChildren
   '/_authenticated/apps': typeof AuthenticatedAppsRoute
@@ -207,20 +393,41 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/team': typeof AuthenticatedTeamRoute
   '/api/analyze': typeof ApiAnalyzeRoute
+  '/api/chat': typeof ApiChatRoute
   '/_authenticated/_angelo/connexion-odoo': typeof AuthenticatedAngeloConnexionOdooRoute
   '/_authenticated/_angelo/factures': typeof AuthenticatedAngeloFacturesRoute
   '/_authenticated/_angelo/journal': typeof AuthenticatedAngeloJournalRoute
   '/_authenticated/_angelo/parametres': typeof AuthenticatedAngeloParametresRoute
   '/_authenticated/_angelo/tableau-de-bord': typeof AuthenticatedAngeloTableauDeBordRoute
   '/_authenticated/_memotrack/memotrack': typeof AuthenticatedMemotrackMemotrackRoute
+  '/_authenticated/ocktavus/agent': typeof AuthenticatedOcktavusAgentRouteWithChildren
+  '/_authenticated/ocktavus/blogger': typeof AuthenticatedOcktavusBloggerRoute
+  '/_authenticated/ocktavus/calendar': typeof AuthenticatedOcktavusCalendarRoute
+  '/_authenticated/ocktavus/connexions': typeof AuthenticatedOcktavusConnexionsRoute
+  '/_authenticated/ocktavus/contacts': typeof AuthenticatedOcktavusContactsRoute
+  '/_authenticated/ocktavus/docs': typeof AuthenticatedOcktavusDocsRoute
+  '/_authenticated/ocktavus/drive': typeof AuthenticatedOcktavusDriveRoute
+  '/_authenticated/ocktavus/forms': typeof AuthenticatedOcktavusFormsRoute
+  '/_authenticated/ocktavus/gmail': typeof AuthenticatedOcktavusGmailRoute
+  '/_authenticated/ocktavus/journal': typeof AuthenticatedOcktavusJournalRoute
+  '/_authenticated/ocktavus/reglages': typeof AuthenticatedOcktavusReglagesRoute
+  '/_authenticated/ocktavus/sheets': typeof AuthenticatedOcktavusSheetsRoute
+  '/_authenticated/ocktavus/slides': typeof AuthenticatedOcktavusSlidesRoute
+  '/_authenticated/ocktavus/tasks': typeof AuthenticatedOcktavusTasksRoute
+  '/api/public/google-chat': typeof ApiPublicGoogleChatRoute
+  '/_authenticated/ocktavus/': typeof AuthenticatedOcktavusIndexRoute
   '/_authenticated/_memotrack/memo/$id': typeof AuthenticatedMemotrackMemoIdRoute
+  '/_authenticated/ocktavus/agent/$conversationId': typeof AuthenticatedOcktavusAgentConversationIdRoute
+  '/_authenticated/ocktavus/chat/$threadId': typeof AuthenticatedOcktavusChatThreadIdRoute
   '/api/public/hooks/angelo-cron': typeof ApiPublicHooksAngeloCronRoute
+  '/_authenticated/ocktavus/agent/': typeof AuthenticatedOcktavusAgentIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
+    | '/ocktavus'
     | '/apps'
     | '/dashboard'
     | '/favorites'
@@ -230,14 +437,34 @@ export interface FileRouteTypes {
     | '/settings'
     | '/team'
     | '/api/analyze'
+    | '/api/chat'
     | '/connexion-odoo'
     | '/factures'
     | '/journal'
     | '/parametres'
     | '/tableau-de-bord'
     | '/memotrack'
+    | '/ocktavus/agent'
+    | '/ocktavus/blogger'
+    | '/ocktavus/calendar'
+    | '/ocktavus/connexions'
+    | '/ocktavus/contacts'
+    | '/ocktavus/docs'
+    | '/ocktavus/drive'
+    | '/ocktavus/forms'
+    | '/ocktavus/gmail'
+    | '/ocktavus/journal'
+    | '/ocktavus/reglages'
+    | '/ocktavus/sheets'
+    | '/ocktavus/slides'
+    | '/ocktavus/tasks'
+    | '/api/public/google-chat'
+    | '/ocktavus/'
     | '/memo/$id'
+    | '/ocktavus/agent/$conversationId'
+    | '/ocktavus/chat/$threadId'
     | '/api/public/hooks/angelo-cron'
+    | '/ocktavus/agent/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -251,19 +478,39 @@ export interface FileRouteTypes {
     | '/settings'
     | '/team'
     | '/api/analyze'
+    | '/api/chat'
     | '/connexion-odoo'
     | '/factures'
     | '/journal'
     | '/parametres'
     | '/tableau-de-bord'
     | '/memotrack'
+    | '/ocktavus/blogger'
+    | '/ocktavus/calendar'
+    | '/ocktavus/connexions'
+    | '/ocktavus/contacts'
+    | '/ocktavus/docs'
+    | '/ocktavus/drive'
+    | '/ocktavus/forms'
+    | '/ocktavus/gmail'
+    | '/ocktavus/journal'
+    | '/ocktavus/reglages'
+    | '/ocktavus/sheets'
+    | '/ocktavus/slides'
+    | '/ocktavus/tasks'
+    | '/api/public/google-chat'
+    | '/ocktavus'
     | '/memo/$id'
+    | '/ocktavus/agent/$conversationId'
+    | '/ocktavus/chat/$threadId'
     | '/api/public/hooks/angelo-cron'
+    | '/ocktavus/agent'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/ocktavus'
     | '/_authenticated/_angelo'
     | '/_authenticated/_memotrack'
     | '/_authenticated/apps'
@@ -275,14 +522,34 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/_authenticated/team'
     | '/api/analyze'
+    | '/api/chat'
     | '/_authenticated/_angelo/connexion-odoo'
     | '/_authenticated/_angelo/factures'
     | '/_authenticated/_angelo/journal'
     | '/_authenticated/_angelo/parametres'
     | '/_authenticated/_angelo/tableau-de-bord'
     | '/_authenticated/_memotrack/memotrack'
+    | '/_authenticated/ocktavus/agent'
+    | '/_authenticated/ocktavus/blogger'
+    | '/_authenticated/ocktavus/calendar'
+    | '/_authenticated/ocktavus/connexions'
+    | '/_authenticated/ocktavus/contacts'
+    | '/_authenticated/ocktavus/docs'
+    | '/_authenticated/ocktavus/drive'
+    | '/_authenticated/ocktavus/forms'
+    | '/_authenticated/ocktavus/gmail'
+    | '/_authenticated/ocktavus/journal'
+    | '/_authenticated/ocktavus/reglages'
+    | '/_authenticated/ocktavus/sheets'
+    | '/_authenticated/ocktavus/slides'
+    | '/_authenticated/ocktavus/tasks'
+    | '/api/public/google-chat'
+    | '/_authenticated/ocktavus/'
     | '/_authenticated/_memotrack/memo/$id'
+    | '/_authenticated/ocktavus/agent/$conversationId'
+    | '/_authenticated/ocktavus/chat/$threadId'
     | '/api/public/hooks/angelo-cron'
+    | '/_authenticated/ocktavus/agent/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -290,6 +557,8 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiAnalyzeRoute: typeof ApiAnalyzeRoute
+  ApiChatRoute: typeof ApiChatRoute
+  ApiPublicGoogleChatRoute: typeof ApiPublicGoogleChatRoute
   ApiPublicHooksAngeloCronRoute: typeof ApiPublicHooksAngeloCronRoute
 }
 
@@ -372,6 +641,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIntegrationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/ocktavus': {
+      id: '/_authenticated/ocktavus'
+      path: '/ocktavus'
+      fullPath: '/ocktavus'
+      preLoaderRoute: typeof AuthenticatedOcktavusRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
       path: '/settings'
@@ -391,6 +667,13 @@ declare module '@tanstack/react-router' {
       path: '/api/analyze'
       fullPath: '/api/analyze'
       preLoaderRoute: typeof ApiAnalyzeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/_angelo/connexion-odoo': {
@@ -435,12 +718,145 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMemotrackMemotrackRouteImport
       parentRoute: typeof AuthenticatedMemotrackRoute
     }
+    '/_authenticated/ocktavus/': {
+      id: '/_authenticated/ocktavus/'
+      path: '/'
+      fullPath: '/ocktavus/'
+      preLoaderRoute: typeof AuthenticatedOcktavusIndexRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/agent': {
+      id: '/_authenticated/ocktavus/agent'
+      path: '/agent'
+      fullPath: '/ocktavus/agent'
+      preLoaderRoute: typeof AuthenticatedOcktavusAgentRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/blogger': {
+      id: '/_authenticated/ocktavus/blogger'
+      path: '/blogger'
+      fullPath: '/ocktavus/blogger'
+      preLoaderRoute: typeof AuthenticatedOcktavusBloggerRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/calendar': {
+      id: '/_authenticated/ocktavus/calendar'
+      path: '/calendar'
+      fullPath: '/ocktavus/calendar'
+      preLoaderRoute: typeof AuthenticatedOcktavusCalendarRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/connexions': {
+      id: '/_authenticated/ocktavus/connexions'
+      path: '/connexions'
+      fullPath: '/ocktavus/connexions'
+      preLoaderRoute: typeof AuthenticatedOcktavusConnexionsRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/contacts': {
+      id: '/_authenticated/ocktavus/contacts'
+      path: '/contacts'
+      fullPath: '/ocktavus/contacts'
+      preLoaderRoute: typeof AuthenticatedOcktavusContactsRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/docs': {
+      id: '/_authenticated/ocktavus/docs'
+      path: '/docs'
+      fullPath: '/ocktavus/docs'
+      preLoaderRoute: typeof AuthenticatedOcktavusDocsRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/drive': {
+      id: '/_authenticated/ocktavus/drive'
+      path: '/drive'
+      fullPath: '/ocktavus/drive'
+      preLoaderRoute: typeof AuthenticatedOcktavusDriveRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/forms': {
+      id: '/_authenticated/ocktavus/forms'
+      path: '/forms'
+      fullPath: '/ocktavus/forms'
+      preLoaderRoute: typeof AuthenticatedOcktavusFormsRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/gmail': {
+      id: '/_authenticated/ocktavus/gmail'
+      path: '/gmail'
+      fullPath: '/ocktavus/gmail'
+      preLoaderRoute: typeof AuthenticatedOcktavusGmailRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/journal': {
+      id: '/_authenticated/ocktavus/journal'
+      path: '/journal'
+      fullPath: '/ocktavus/journal'
+      preLoaderRoute: typeof AuthenticatedOcktavusJournalRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/reglages': {
+      id: '/_authenticated/ocktavus/reglages'
+      path: '/reglages'
+      fullPath: '/ocktavus/reglages'
+      preLoaderRoute: typeof AuthenticatedOcktavusReglagesRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/sheets': {
+      id: '/_authenticated/ocktavus/sheets'
+      path: '/sheets'
+      fullPath: '/ocktavus/sheets'
+      preLoaderRoute: typeof AuthenticatedOcktavusSheetsRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/slides': {
+      id: '/_authenticated/ocktavus/slides'
+      path: '/slides'
+      fullPath: '/ocktavus/slides'
+      preLoaderRoute: typeof AuthenticatedOcktavusSlidesRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/_authenticated/ocktavus/tasks': {
+      id: '/_authenticated/ocktavus/tasks'
+      path: '/tasks'
+      fullPath: '/ocktavus/tasks'
+      preLoaderRoute: typeof AuthenticatedOcktavusTasksRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
+    }
+    '/api/public/google-chat': {
+      id: '/api/public/google-chat'
+      path: '/api/public/google-chat'
+      fullPath: '/api/public/google-chat'
+      preLoaderRoute: typeof ApiPublicGoogleChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/_memotrack/memo/$id': {
       id: '/_authenticated/_memotrack/memo/$id'
       path: '/memo/$id'
       fullPath: '/memo/$id'
       preLoaderRoute: typeof AuthenticatedMemotrackMemoIdRouteImport
       parentRoute: typeof AuthenticatedMemotrackRoute
+    }
+    '/_authenticated/ocktavus/agent/': {
+      id: '/_authenticated/ocktavus/agent/'
+      path: '/'
+      fullPath: '/ocktavus/agent/'
+      preLoaderRoute: typeof AuthenticatedOcktavusAgentIndexRouteImport
+      parentRoute: typeof AuthenticatedOcktavusAgentRoute
+    }
+    '/_authenticated/ocktavus/agent/$conversationId': {
+      id: '/_authenticated/ocktavus/agent/$conversationId'
+      path: '/$conversationId'
+      fullPath: '/ocktavus/agent/$conversationId'
+      preLoaderRoute: typeof AuthenticatedOcktavusAgentConversationIdRouteImport
+      parentRoute: typeof AuthenticatedOcktavusAgentRoute
+    }
+    '/_authenticated/ocktavus/chat/$threadId': {
+      id: '/_authenticated/ocktavus/chat/$threadId'
+      path: '/chat/$threadId'
+      fullPath: '/ocktavus/chat/$threadId'
+      preLoaderRoute: typeof AuthenticatedOcktavusChatThreadIdRouteImport
+      parentRoute: typeof AuthenticatedOcktavusRouteRoute
     }
     '/api/public/hooks/angelo-cron': {
       id: '/api/public/hooks/angelo-cron'
@@ -451,6 +867,69 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthenticatedOcktavusAgentRouteChildren {
+  AuthenticatedOcktavusAgentConversationIdRoute: typeof AuthenticatedOcktavusAgentConversationIdRoute
+  AuthenticatedOcktavusAgentIndexRoute: typeof AuthenticatedOcktavusAgentIndexRoute
+}
+
+const AuthenticatedOcktavusAgentRouteChildren: AuthenticatedOcktavusAgentRouteChildren =
+  {
+    AuthenticatedOcktavusAgentConversationIdRoute:
+      AuthenticatedOcktavusAgentConversationIdRoute,
+    AuthenticatedOcktavusAgentIndexRoute: AuthenticatedOcktavusAgentIndexRoute,
+  }
+
+const AuthenticatedOcktavusAgentRouteWithChildren =
+  AuthenticatedOcktavusAgentRoute._addFileChildren(
+    AuthenticatedOcktavusAgentRouteChildren,
+  )
+
+interface AuthenticatedOcktavusRouteRouteChildren {
+  AuthenticatedOcktavusAgentRoute: typeof AuthenticatedOcktavusAgentRouteWithChildren
+  AuthenticatedOcktavusBloggerRoute: typeof AuthenticatedOcktavusBloggerRoute
+  AuthenticatedOcktavusCalendarRoute: typeof AuthenticatedOcktavusCalendarRoute
+  AuthenticatedOcktavusConnexionsRoute: typeof AuthenticatedOcktavusConnexionsRoute
+  AuthenticatedOcktavusContactsRoute: typeof AuthenticatedOcktavusContactsRoute
+  AuthenticatedOcktavusDocsRoute: typeof AuthenticatedOcktavusDocsRoute
+  AuthenticatedOcktavusDriveRoute: typeof AuthenticatedOcktavusDriveRoute
+  AuthenticatedOcktavusFormsRoute: typeof AuthenticatedOcktavusFormsRoute
+  AuthenticatedOcktavusGmailRoute: typeof AuthenticatedOcktavusGmailRoute
+  AuthenticatedOcktavusJournalRoute: typeof AuthenticatedOcktavusJournalRoute
+  AuthenticatedOcktavusReglagesRoute: typeof AuthenticatedOcktavusReglagesRoute
+  AuthenticatedOcktavusSheetsRoute: typeof AuthenticatedOcktavusSheetsRoute
+  AuthenticatedOcktavusSlidesRoute: typeof AuthenticatedOcktavusSlidesRoute
+  AuthenticatedOcktavusTasksRoute: typeof AuthenticatedOcktavusTasksRoute
+  AuthenticatedOcktavusIndexRoute: typeof AuthenticatedOcktavusIndexRoute
+  AuthenticatedOcktavusChatThreadIdRoute: typeof AuthenticatedOcktavusChatThreadIdRoute
+}
+
+const AuthenticatedOcktavusRouteRouteChildren: AuthenticatedOcktavusRouteRouteChildren =
+  {
+    AuthenticatedOcktavusAgentRoute:
+      AuthenticatedOcktavusAgentRouteWithChildren,
+    AuthenticatedOcktavusBloggerRoute: AuthenticatedOcktavusBloggerRoute,
+    AuthenticatedOcktavusCalendarRoute: AuthenticatedOcktavusCalendarRoute,
+    AuthenticatedOcktavusConnexionsRoute: AuthenticatedOcktavusConnexionsRoute,
+    AuthenticatedOcktavusContactsRoute: AuthenticatedOcktavusContactsRoute,
+    AuthenticatedOcktavusDocsRoute: AuthenticatedOcktavusDocsRoute,
+    AuthenticatedOcktavusDriveRoute: AuthenticatedOcktavusDriveRoute,
+    AuthenticatedOcktavusFormsRoute: AuthenticatedOcktavusFormsRoute,
+    AuthenticatedOcktavusGmailRoute: AuthenticatedOcktavusGmailRoute,
+    AuthenticatedOcktavusJournalRoute: AuthenticatedOcktavusJournalRoute,
+    AuthenticatedOcktavusReglagesRoute: AuthenticatedOcktavusReglagesRoute,
+    AuthenticatedOcktavusSheetsRoute: AuthenticatedOcktavusSheetsRoute,
+    AuthenticatedOcktavusSlidesRoute: AuthenticatedOcktavusSlidesRoute,
+    AuthenticatedOcktavusTasksRoute: AuthenticatedOcktavusTasksRoute,
+    AuthenticatedOcktavusIndexRoute: AuthenticatedOcktavusIndexRoute,
+    AuthenticatedOcktavusChatThreadIdRoute:
+      AuthenticatedOcktavusChatThreadIdRoute,
+  }
+
+const AuthenticatedOcktavusRouteRouteWithChildren =
+  AuthenticatedOcktavusRouteRoute._addFileChildren(
+    AuthenticatedOcktavusRouteRouteChildren,
+  )
 
 interface AuthenticatedAngeloRouteChildren {
   AuthenticatedAngeloConnexionOdooRoute: typeof AuthenticatedAngeloConnexionOdooRoute
@@ -488,6 +967,7 @@ const AuthenticatedMemotrackRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedOcktavusRouteRoute: typeof AuthenticatedOcktavusRouteRouteWithChildren
   AuthenticatedAngeloRoute: typeof AuthenticatedAngeloRouteWithChildren
   AuthenticatedMemotrackRoute: typeof AuthenticatedMemotrackRouteWithChildren
   AuthenticatedAppsRoute: typeof AuthenticatedAppsRoute
@@ -501,6 +981,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedOcktavusRouteRoute: AuthenticatedOcktavusRouteRouteWithChildren,
   AuthenticatedAngeloRoute: AuthenticatedAngeloRouteWithChildren,
   AuthenticatedMemotrackRoute: AuthenticatedMemotrackRouteWithChildren,
   AuthenticatedAppsRoute: AuthenticatedAppsRoute,
@@ -521,6 +1002,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiAnalyzeRoute: ApiAnalyzeRoute,
+  ApiChatRoute: ApiChatRoute,
+  ApiPublicGoogleChatRoute: ApiPublicGoogleChatRoute,
   ApiPublicHooksAngeloCronRoute: ApiPublicHooksAngeloCronRoute,
 }
 export const routeTree = rootRouteImport

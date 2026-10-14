@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { wsGmailList, wsCalendarUpcoming, wsTasks, wsDriveList } from "@/lib/workspace.functions";
 import { Mail, Calendar, CheckSquare, HardDrive, Bot, ArrowRight, Activity, Sparkles, Cloud } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/ocktavus/ocktavus/")({
+export const Route = createFileRoute("/_authenticated/ocktavus/")({
   component: Cockpit,
 });
 
