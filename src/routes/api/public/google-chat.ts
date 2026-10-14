@@ -131,7 +131,7 @@ export const Route = createFileRoute("/api/public/google-chat")({
             system: `Tu es OCKTAVUS, agent IA autonome Google Workspace. Réponds en français, court et clair (Google Chat — markdown léger). ${
               gcreds
                 ? `Exécute les actions directement avec les outils Workspace. Si l'utilisateur demande PLUSIEURS tâches dans le même message, lance-les en parallèle. Pour les noms issus d'une transcription, cherche avec fragments et variantes phonétiques. Fuseau obligatoire : ${tz}. Pour demain/semaine prochaine, calcule depuis l'heure locale ci-dessous et passe à create_event une date YYYY-MM-DDTHH:mm:ss sans Z ni offset. Pour les e-mails, utilise un ton ${fullSettings?.email_tone ?? "professionnel"} et commence par une salutation. Termine par « ✅ Résultat » avec un résumé, puis les verificationUrl retournés. En cas d'échec, explique brièvement le diagnostic et les tentatives, sans exposer de raisonnement interne privé.`
-                : "Demande à l'utilisateur de connecter son compte Google dans l'app web (OCKTAVUS → Connexions)."
+                : "Demande à l'utilisateur de connecter son compte Google dans l'app web (Paramètres → Connexion Google)."
             } Date/heure locale exacte: ${new Date().toLocaleString("fr-FR", { timeZone: tz, dateStyle: "full", timeStyle: "long" })} (${tz}).`,
             messages: [
               ...memory.map((m) => ({ role: m.role as "user" | "assistant", content: m.content })),

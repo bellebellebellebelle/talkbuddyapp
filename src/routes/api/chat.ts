@@ -69,7 +69,7 @@ RÈGLES IMPORTANTES :
 - Pour chaque e-mail, applique une salutation initiale et le ton **${settings?.email_tone ?? "professionnel"}**. Ne commence jamais directement par le contenu brut.
 - Enchaîne plusieurs outils si nécessaire pour accomplir la tâche complète (par ex. chercher un contact → créer un événement → l'inviter).
 - Une fois terminé, fais un récapitulatif clair de ce que tu as fait et inclus chaque verificationUrl retourné par les outils.`
-  : `⚠️ L'utilisateur n'a PAS encore connecté son compte Google. Invite-le à aller dans **Connexions** pour autoriser l'accès Workspace.`}
+  : `⚠️ L'utilisateur n'a PAS encore connecté son compte Google. Invite-le à aller dans **Paramètres → Connexion Google** pour autoriser l'accès Workspace.`}
 
 Date/heure locale exacte : ${new Date().toLocaleString("fr-FR", { timeZone: tz, dateStyle: "full", timeStyle: "long" })} (${tz}).
 Format : Markdown propre, listes claires.`;
