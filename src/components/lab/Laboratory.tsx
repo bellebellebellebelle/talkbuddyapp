@@ -8,7 +8,7 @@ import { applications, labQuery } from '@/lib/laboratory';
 import { GoogleConnectionPanel } from '@/components/google/GoogleConnectionPanel';
 import type { User } from '@supabase/supabase-js';
 type View='dashboard'|'ideas'|'apps'|'history'|'favorites'|'integrations'|'team'|'settings';
-const appIcons={memotrack:AudioLines,angelo:ReceiptEuro};
+const appIcons={memotrack:AudioLines,angelo:ReceiptEuro,ocktavus:Bot};
 function Sparkline({tone='cyan'}:{tone?:string}){return <svg className={`sparkline ${tone}`} viewBox="0 0 80 30" aria-hidden="true"><path d="M2 24 H78" fill="none" stroke="currentColor" strokeWidth="1" opacity=".5"/></svg>}
 export function Laboratory({user,view='dashboard',settingsTab='compte'}:{user:User;view?:View;settingsTab?:'compte'|'google'}){
  const router=useRouter();const queryClient=useQueryClient();const {data}=useSuspenseQuery(labQuery);const [menu,setMenu]=useState(false);const [modal,setModal]=useState<string|null>(null);const [title,setTitle]=useState('');const [description,setDescription]=useState('');const [error,setError]=useState('');const [saving,setSaving]=useState(false);const [period,setPeriod]=useState('7');const [caption,setCaption]=useState('');

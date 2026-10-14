@@ -1,36 +1,21 @@
-import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
-import { startGmailOAuth, disconnectGmail, generateChatLinkCode, unlinkChatSpace } from "@/lib/oauth.functions";
+import { generateChatLinkCode, unlinkChatSpace } from "@/lib/oauth.functions";
 import { Mail, MessageSquare, Check, X, Copy, Loader2, Trash2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
-import { z } from "zod";
-
-const search = z.object({ gmail: z.enum(["ok", "error", "no_refresh"]).optional(), msg: z.string().optional() });
+import { useState } from "react";
 
 export const Route = createFileRoute("/_authenticated/ocktavus/connexions")({
-  validateSearch: search,
   component: ConnectionsPage,
 });
 
 function ConnectionsPage() {
-  const navigate = useNavigate();
   const qc = useQueryClient();
-  const params = Route.useSearch();
-  const startOauth = useServerFn(startGmailOAuth);
-  const disconnect = useServerFn(disconnectGmail);
   const genCode = useServerFn(generateChatLinkCode);
   const unlink = useServerFn(unlinkChatSpace);
-
-  useEffect(() => {
-    if (params.gmail === "ok") toast.success("Gmail connecté avec succès !");
-    if (params.gmail === "error") toast.error("Échec de la connexion Gmail." + (params.msg ? ` (${params.msg})` : ""));
-    if (params.gmail === "no_refresh") toast.error("Pas de refresh token reçu. Réessaie en cochant 'Accès permanent'.");
-    if (params.gmail) navigate({ to: "/ocktavus/connexions", replace: true });
-  }, [params.gmail, params.msg, navigate]);
 
   const { data: gmail, isLoading: gmailLoading } = useQuery({
     queryKey: ["gmail-status"],
@@ -50,20 +35,6 @@ function ConnectionsPage() {
 
   const [code, setCode] = useState<{ code: string; endpoint: string } | null>(null);
 
-  const connectMutation = useMutation({
-    mutationFn: async () => startOauth({}),
-    onSuccess: (res) => { window.location.href = res.url; },
-    onError: (e: any) => toast.error(e?.message ?? "Erreur"),
-  });
-
-  const disconnectMutation = useMutation({
-    mutationFn: async () => disconnect({}),
-    onSuccess: () => {
-      toast.success("Gmail déconnecté");
-      qc.invalidateQueries({ queryKey: ["gmail-status"] });
-    },
-  });
-
   const generateMutation = useMutation({
     mutationFn: async () => genCode({}),
     onSuccess: (res) => { setCode(res); toast.success("Code généré, valable 15 minutes"); },
@@ -76,12 +47,12 @@ function ConnectionsPage() {
     <div className="flex h-full flex-col">
       <header className="border-b border-border px-8 py-5">
         <h1 className="font-display text-2xl font-semibold">Connexions</h1>
-        <p className="text-sm text-muted-foreground">Lie Gmail et Google Chat à ton agent IA.</p>
+        <p className="text-sm text-muted-foreground">Lie Google Chat à ton agent IA.</p>
       </header>
 
       <div className="flex-1 overflow-y-auto p-8">
         <div className="mx-auto max-w-3xl space-y-6">
-          {/* Gmail */}
+          {/* Google account: managed once in Paramètres → Connexion Google */}
           <section className="ock-glass rounded-2xl p-6">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-4">
@@ -89,31 +60,18 @@ function ConnectionsPage() {
                   <Mail className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h2 className="font-display text-lg font-semibold">Compte Gmail</h2>
+                  <h2 className="font-display text-lg font-semibold">Compte Google</h2>
                   {gmailLoading ? (
                     <p className="text-sm text-muted-foreground">Chargement…</p>
                   ) : gmail ? (
-                    <div className="mt-1 flex items-center gap-2">
-                      <Check className="h-4 w-4 text-emerald-400" />
-                      <p className="text-sm">Connecté : <span className="font-medium">{gmail.google_email}</span></p>
-                    </div>
+                    <p className="mt-1 flex items-center gap-2 text-sm"><Check className="h-4 w-4 text-primary" />Connecté : <span className="font-medium">{gmail.google_email}</span></p>
                   ) : (
                     <p className="mt-1 text-sm text-muted-foreground">Aucun compte connecté.</p>
                   )}
+                  <p className="mt-1 text-xs text-muted-foreground">La connexion Google est partagée par toutes vos apps et se gère dans Paramètres → Connexion Google.</p>
                 </div>
               </div>
-              {gmail ? (
-                <Button variant="outline" onClick={() => disconnectMutation.mutate()} disabled={disconnectMutation.isPending}>
-                  {disconnectMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Déconnecter"}
-                </Button>
-              ) : (
-                <Button onClick={() => connectMutation.mutate()} disabled={connectMutation.isPending} className="neon-glow">
-                  {connectMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Connecter Gmail"}
-                </Button>
-              )}
-            </div>
-            <div className="mt-4 rounded-lg bg-muted/50 p-3 text-xs text-muted-foreground">
-              <strong>Permissions demandées :</strong> lire les messages, envoyer des emails, créer/envoyer des brouillons. Tu peux révoquer l'accès à tout moment.
+              <Button asChild className="neon-glow"><Link to="/settings" search={{ tab: "google" }}>{gmail ? "Gérer" : "Connecter"}</Link></Button>
             </div>
           </section>
 

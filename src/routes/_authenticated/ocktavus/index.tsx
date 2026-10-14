@@ -65,7 +65,7 @@ function Cockpit() {
             </div>
             <h2 className="font-display text-2xl">Connecte ton Google Workspace</h2>
             <p className="mt-2 text-sm text-muted-foreground">OCKTAVUS a besoin d'accéder à Gmail, Agenda, Drive, Docs, Sheets, Tâches et Contacts pour agir en ton nom.</p>
-            <Link to="/ocktavus/connexions" className="mt-5 inline-flex items-center gap-1 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground holo-glow">
+            <Link to="/settings" search={{ tab: "google" }} className="mt-5 inline-flex items-center gap-1 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground holo-glow">
               Connecter Google <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
