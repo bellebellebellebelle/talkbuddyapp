@@ -14,6 +14,116 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_actions_log: {
+        Row: {
+          args: Json | null
+          attempt: number
+          created_at: string
+          error_detail: string | null
+          id: string
+          plan: Json | null
+          result: Json | null
+          source: string
+          stage: string
+          status: string
+          task_id: string | null
+          tool_name: string
+          user_id: string
+          verification_url: string | null
+        }
+        Insert: {
+          args?: Json | null
+          attempt?: number
+          created_at?: string
+          error_detail?: string | null
+          id?: string
+          plan?: Json | null
+          result?: Json | null
+          source?: string
+          stage?: string
+          status?: string
+          task_id?: string | null
+          tool_name: string
+          user_id: string
+          verification_url?: string | null
+        }
+        Update: {
+          args?: Json | null
+          attempt?: number
+          created_at?: string
+          error_detail?: string | null
+          id?: string
+          plan?: Json | null
+          result?: Json | null
+          source?: string
+          stage?: string
+          status?: string
+          task_id?: string | null
+          tool_name?: string
+          user_id?: string
+          verification_url?: string | null
+        }
+        Relationships: []
+      }
+      agent_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      agent_messages: {
+        Row: {
+          conversation_id: string
+          created_at: string
+          id: string
+          parts: Json
+          role: string
+          user_id: string
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string
+          id?: string
+          parts: Json
+          role: string
+          user_id: string
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          parts?: Json
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "agent_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       angelo_settings: {
         Row: {
           agent_name: string
@@ -63,6 +173,89 @@ export type Database = {
           min_days_between_reminders?: number
           signature?: string
           tone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_link_codes: {
+        Row: {
+          code: string
+          consumed_at: string | null
+          created_at: string
+          expires_at: string
+          user_id: string
+        }
+        Insert: {
+          code: string
+          consumed_at?: string | null
+          created_at?: string
+          expires_at?: string
+          user_id: string
+        }
+        Update: {
+          code?: string
+          consumed_at?: string | null
+          created_at?: string
+          expires_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          created_at: string
+          id: string
+          parts: Json
+          role: string
+          thread_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          parts: Json
+          role: string
+          thread_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          parts?: Json
+          role?: string
+          thread_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "chat_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_threads: {
+        Row: {
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string
           updated_at?: string
           user_id?: string
         }
@@ -122,6 +315,87 @@ export type Database = {
         Update: {
           id?: number
           token?: string
+        }
+        Relationships: []
+      }
+      gmail_credentials: {
+        Row: {
+          access_token: string
+          created_at: string
+          expires_at: string
+          google_email: string | null
+          refresh_token: string
+          scopes: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_token: string
+          created_at?: string
+          expires_at: string
+          google_email?: string | null
+          refresh_token: string
+          scopes?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_token?: string
+          created_at?: string
+          expires_at?: string
+          google_email?: string | null
+          refresh_token?: string
+          scopes?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      google_chat_links: {
+        Row: {
+          display_name: string | null
+          linked_at: string
+          space_id: string
+          user_id: string
+        }
+        Insert: {
+          display_name?: string | null
+          linked_at?: string
+          space_id: string
+          user_id: string
+        }
+        Update: {
+          display_name?: string | null
+          linked_at?: string
+          space_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      google_chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          space_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          space_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          space_id?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -380,6 +654,27 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          email: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
       reminder_logs: {
         Row: {
           amount_residual: number | null
@@ -542,9 +837,68 @@ export type Database = {
         }
         Relationships: []
       }
+      user_settings: {
+        Row: {
+          ai_model: string
+          chat_memory_size: number
+          created_at: string
+          email_greeting: string
+          email_signature: string
+          email_tone: string
+          timezone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_model?: string
+          chat_memory_size?: number
+          created_at?: string
+          email_greeting?: string
+          email_signature?: string
+          email_tone?: string
+          timezone?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_model?: string
+          chat_memory_size?: number
+          created_at?: string
+          email_greeting?: string
+          email_signature?: string
+          email_tone?: string
+          timezone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      gmail_connection_status: {
+        Row: {
+          expires_at: string | null
+          google_email: string | null
+          scopes: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          expires_at?: string | null
+          google_email?: string | null
+          scopes?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          expires_at?: string | null
+          google_email?: string | null
+          scopes?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       angelo_init_user: { Args: { _uid: string }; Returns: undefined }
