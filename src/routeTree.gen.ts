@@ -51,6 +51,7 @@ import { Route as AuthenticatedMemotrackMemoIdRouteImport } from './routes/_auth
 import { Route as AuthenticatedOcktavusAgentIndexRouteImport } from './routes/_authenticated/ocktavus/agent.index'
 import { Route as AuthenticatedOcktavusAgentConversationIdRouteImport } from './routes/_authenticated/ocktavus/agent.$conversationId'
 import { Route as AuthenticatedOcktavusChatThreadIdRouteImport } from './routes/_authenticated/ocktavus/chat.$threadId'
+import { Route as ApiPublicGoogleCallbackRouteImport } from './routes/api/public/google.callback'
 import { Route as ApiPublicHooksAngeloCronRouteImport } from './routes/api/public/hooks/angelo-cron'
 
 const IndexRoute = IndexRouteImport.update({
@@ -287,6 +288,11 @@ const AuthenticatedOcktavusChatThreadIdRoute =
     path: '/chat/$threadId',
     getParentRoute: () => AuthenticatedOcktavusRouteRoute,
   } as any)
+const ApiPublicGoogleCallbackRoute = ApiPublicGoogleCallbackRouteImport.update({
+  id: '/api/public/google/callback',
+  path: '/api/public/google/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksAngeloCronRoute =
   ApiPublicHooksAngeloCronRouteImport.update({
     id: '/api/public/hooks/angelo-cron',
@@ -333,6 +339,7 @@ export interface FileRoutesByFullPath {
   '/memo/$id': typeof AuthenticatedMemotrackMemoIdRoute
   '/ocktavus/agent/$conversationId': typeof AuthenticatedOcktavusAgentConversationIdRoute
   '/ocktavus/chat/$threadId': typeof AuthenticatedOcktavusChatThreadIdRoute
+  '/api/public/google/callback': typeof ApiPublicGoogleCallbackRoute
   '/api/public/hooks/angelo-cron': typeof ApiPublicHooksAngeloCronRoute
   '/ocktavus/agent/': typeof AuthenticatedOcktavusAgentIndexRoute
 }
@@ -373,6 +380,7 @@ export interface FileRoutesByTo {
   '/memo/$id': typeof AuthenticatedMemotrackMemoIdRoute
   '/ocktavus/agent/$conversationId': typeof AuthenticatedOcktavusAgentConversationIdRoute
   '/ocktavus/chat/$threadId': typeof AuthenticatedOcktavusChatThreadIdRoute
+  '/api/public/google/callback': typeof ApiPublicGoogleCallbackRoute
   '/api/public/hooks/angelo-cron': typeof ApiPublicHooksAngeloCronRoute
   '/ocktavus/agent': typeof AuthenticatedOcktavusAgentIndexRoute
 }
@@ -419,6 +427,7 @@ export interface FileRoutesById {
   '/_authenticated/_memotrack/memo/$id': typeof AuthenticatedMemotrackMemoIdRoute
   '/_authenticated/ocktavus/agent/$conversationId': typeof AuthenticatedOcktavusAgentConversationIdRoute
   '/_authenticated/ocktavus/chat/$threadId': typeof AuthenticatedOcktavusChatThreadIdRoute
+  '/api/public/google/callback': typeof ApiPublicGoogleCallbackRoute
   '/api/public/hooks/angelo-cron': typeof ApiPublicHooksAngeloCronRoute
   '/_authenticated/ocktavus/agent/': typeof AuthenticatedOcktavusAgentIndexRoute
 }
@@ -463,6 +472,7 @@ export interface FileRouteTypes {
     | '/memo/$id'
     | '/ocktavus/agent/$conversationId'
     | '/ocktavus/chat/$threadId'
+    | '/api/public/google/callback'
     | '/api/public/hooks/angelo-cron'
     | '/ocktavus/agent/'
   fileRoutesByTo: FileRoutesByTo
@@ -503,6 +513,7 @@ export interface FileRouteTypes {
     | '/memo/$id'
     | '/ocktavus/agent/$conversationId'
     | '/ocktavus/chat/$threadId'
+    | '/api/public/google/callback'
     | '/api/public/hooks/angelo-cron'
     | '/ocktavus/agent'
   id:
@@ -548,6 +559,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_memotrack/memo/$id'
     | '/_authenticated/ocktavus/agent/$conversationId'
     | '/_authenticated/ocktavus/chat/$threadId'
+    | '/api/public/google/callback'
     | '/api/public/hooks/angelo-cron'
     | '/_authenticated/ocktavus/agent/'
   fileRoutesById: FileRoutesById
@@ -559,6 +571,7 @@ export interface RootRouteChildren {
   ApiAnalyzeRoute: typeof ApiAnalyzeRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiPublicGoogleChatRoute: typeof ApiPublicGoogleChatRoute
+  ApiPublicGoogleCallbackRoute: typeof ApiPublicGoogleCallbackRoute
   ApiPublicHooksAngeloCronRoute: typeof ApiPublicHooksAngeloCronRoute
 }
 
@@ -858,6 +871,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOcktavusChatThreadIdRouteImport
       parentRoute: typeof AuthenticatedOcktavusRouteRoute
     }
+    '/api/public/google/callback': {
+      id: '/api/public/google/callback'
+      path: '/api/public/google/callback'
+      fullPath: '/api/public/google/callback'
+      preLoaderRoute: typeof ApiPublicGoogleCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/angelo-cron': {
       id: '/api/public/hooks/angelo-cron'
       path: '/api/public/hooks/angelo-cron'
@@ -1004,6 +1024,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAnalyzeRoute: ApiAnalyzeRoute,
   ApiChatRoute: ApiChatRoute,
   ApiPublicGoogleChatRoute: ApiPublicGoogleChatRoute,
+  ApiPublicGoogleCallbackRoute: ApiPublicGoogleCallbackRoute,
   ApiPublicHooksAngeloCronRoute: ApiPublicHooksAngeloCronRoute,
 }
 export const routeTree = rootRouteImport
