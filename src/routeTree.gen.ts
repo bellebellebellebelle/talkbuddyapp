@@ -10,33 +10,287 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAngeloRouteImport } from './routes/_authenticated/_angelo'
+import { Route as AuthenticatedMemotrackRouteImport } from './routes/_authenticated/_memotrack'
+import { Route as AuthenticatedAppsRouteImport } from './routes/_authenticated/apps'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedFavoritesRouteImport } from './routes/_authenticated/favorites'
+import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
+import { Route as AuthenticatedIdeasRouteImport } from './routes/_authenticated/ideas'
+import { Route as AuthenticatedIntegrationsRouteImport } from './routes/_authenticated/integrations'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedTeamRouteImport } from './routes/_authenticated/team'
+import { Route as ApiAnalyzeRouteImport } from './routes/api/analyze'
+import { Route as AuthenticatedAngeloConnexionOdooRouteImport } from './routes/_authenticated/_angelo/connexion-odoo'
+import { Route as AuthenticatedAngeloFacturesRouteImport } from './routes/_authenticated/_angelo/factures'
+import { Route as AuthenticatedAngeloJournalRouteImport } from './routes/_authenticated/_angelo/journal'
+import { Route as AuthenticatedAngeloParametresRouteImport } from './routes/_authenticated/_angelo/parametres'
+import { Route as AuthenticatedAngeloTableauDeBordRouteImport } from './routes/_authenticated/_angelo/tableau-de-bord'
+import { Route as AuthenticatedMemotrackMemotrackRouteImport } from './routes/_authenticated/_memotrack/memotrack'
+import { Route as AuthenticatedMemotrackMemoIdRouteImport } from './routes/_authenticated/_memotrack/memo.$id'
+import { Route as ApiPublicHooksAngeloCronRouteImport } from './routes/api/public/hooks/angelo-cron'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAngeloRoute = AuthenticatedAngeloRouteImport.update({
+  id: '/_angelo',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMemotrackRoute = AuthenticatedMemotrackRouteImport.update({
+  id: '/_memotrack',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAppsRoute = AuthenticatedAppsRouteImport.update({
+  id: '/apps',
+  path: '/apps',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFavoritesRoute = AuthenticatedFavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedIdeasRoute = AuthenticatedIdeasRouteImport.update({
+  id: '/ideas',
+  path: '/ideas',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedIntegrationsRoute =
+  AuthenticatedIntegrationsRouteImport.update({
+    id: '/integrations',
+    path: '/integrations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTeamRoute = AuthenticatedTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiAnalyzeRoute = ApiAnalyzeRouteImport.update({
+  id: '/api/analyze',
+  path: '/api/analyze',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAngeloConnexionOdooRoute =
+  AuthenticatedAngeloConnexionOdooRouteImport.update({
+    id: '/connexion-odoo',
+    path: '/connexion-odoo',
+    getParentRoute: () => AuthenticatedAngeloRoute,
+  } as any)
+const AuthenticatedAngeloFacturesRoute =
+  AuthenticatedAngeloFacturesRouteImport.update({
+    id: '/factures',
+    path: '/factures',
+    getParentRoute: () => AuthenticatedAngeloRoute,
+  } as any)
+const AuthenticatedAngeloJournalRoute =
+  AuthenticatedAngeloJournalRouteImport.update({
+    id: '/journal',
+    path: '/journal',
+    getParentRoute: () => AuthenticatedAngeloRoute,
+  } as any)
+const AuthenticatedAngeloParametresRoute =
+  AuthenticatedAngeloParametresRouteImport.update({
+    id: '/parametres',
+    path: '/parametres',
+    getParentRoute: () => AuthenticatedAngeloRoute,
+  } as any)
+const AuthenticatedAngeloTableauDeBordRoute =
+  AuthenticatedAngeloTableauDeBordRouteImport.update({
+    id: '/tableau-de-bord',
+    path: '/tableau-de-bord',
+    getParentRoute: () => AuthenticatedAngeloRoute,
+  } as any)
+const AuthenticatedMemotrackMemotrackRoute =
+  AuthenticatedMemotrackMemotrackRouteImport.update({
+    id: '/memotrack',
+    path: '/memotrack',
+    getParentRoute: () => AuthenticatedMemotrackRoute,
+  } as any)
+const AuthenticatedMemotrackMemoIdRoute =
+  AuthenticatedMemotrackMemoIdRouteImport.update({
+    id: '/memo/$id',
+    path: '/memo/$id',
+    getParentRoute: () => AuthenticatedMemotrackRoute,
+  } as any)
+const ApiPublicHooksAngeloCronRoute =
+  ApiPublicHooksAngeloCronRouteImport.update({
+    id: '/api/public/hooks/angelo-cron',
+    path: '/api/public/hooks/angelo-cron',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/apps': typeof AuthenticatedAppsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/favorites': typeof AuthenticatedFavoritesRoute
+  '/history': typeof AuthenticatedHistoryRoute
+  '/ideas': typeof AuthenticatedIdeasRoute
+  '/integrations': typeof AuthenticatedIntegrationsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/team': typeof AuthenticatedTeamRoute
+  '/api/analyze': typeof ApiAnalyzeRoute
+  '/connexion-odoo': typeof AuthenticatedAngeloConnexionOdooRoute
+  '/factures': typeof AuthenticatedAngeloFacturesRoute
+  '/journal': typeof AuthenticatedAngeloJournalRoute
+  '/parametres': typeof AuthenticatedAngeloParametresRoute
+  '/tableau-de-bord': typeof AuthenticatedAngeloTableauDeBordRoute
+  '/memotrack': typeof AuthenticatedMemotrackMemotrackRoute
+  '/memo/$id': typeof AuthenticatedMemotrackMemoIdRoute
+  '/api/public/hooks/angelo-cron': typeof ApiPublicHooksAngeloCronRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/apps': typeof AuthenticatedAppsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/favorites': typeof AuthenticatedFavoritesRoute
+  '/history': typeof AuthenticatedHistoryRoute
+  '/ideas': typeof AuthenticatedIdeasRoute
+  '/integrations': typeof AuthenticatedIntegrationsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/team': typeof AuthenticatedTeamRoute
+  '/api/analyze': typeof ApiAnalyzeRoute
+  '/connexion-odoo': typeof AuthenticatedAngeloConnexionOdooRoute
+  '/factures': typeof AuthenticatedAngeloFacturesRoute
+  '/journal': typeof AuthenticatedAngeloJournalRoute
+  '/parametres': typeof AuthenticatedAngeloParametresRoute
+  '/tableau-de-bord': typeof AuthenticatedAngeloTableauDeBordRoute
+  '/memotrack': typeof AuthenticatedMemotrackMemotrackRoute
+  '/memo/$id': typeof AuthenticatedMemotrackMemoIdRoute
+  '/api/public/hooks/angelo-cron': typeof ApiPublicHooksAngeloCronRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/_angelo': typeof AuthenticatedAngeloRouteWithChildren
+  '/_authenticated/_memotrack': typeof AuthenticatedMemotrackRouteWithChildren
+  '/_authenticated/apps': typeof AuthenticatedAppsRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/favorites': typeof AuthenticatedFavoritesRoute
+  '/_authenticated/history': typeof AuthenticatedHistoryRoute
+  '/_authenticated/ideas': typeof AuthenticatedIdeasRoute
+  '/_authenticated/integrations': typeof AuthenticatedIntegrationsRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/team': typeof AuthenticatedTeamRoute
+  '/api/analyze': typeof ApiAnalyzeRoute
+  '/_authenticated/_angelo/connexion-odoo': typeof AuthenticatedAngeloConnexionOdooRoute
+  '/_authenticated/_angelo/factures': typeof AuthenticatedAngeloFacturesRoute
+  '/_authenticated/_angelo/journal': typeof AuthenticatedAngeloJournalRoute
+  '/_authenticated/_angelo/parametres': typeof AuthenticatedAngeloParametresRoute
+  '/_authenticated/_angelo/tableau-de-bord': typeof AuthenticatedAngeloTableauDeBordRoute
+  '/_authenticated/_memotrack/memotrack': typeof AuthenticatedMemotrackMemotrackRoute
+  '/_authenticated/_memotrack/memo/$id': typeof AuthenticatedMemotrackMemoIdRoute
+  '/api/public/hooks/angelo-cron': typeof ApiPublicHooksAngeloCronRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/apps'
+    | '/dashboard'
+    | '/favorites'
+    | '/history'
+    | '/ideas'
+    | '/integrations'
+    | '/settings'
+    | '/team'
+    | '/api/analyze'
+    | '/connexion-odoo'
+    | '/factures'
+    | '/journal'
+    | '/parametres'
+    | '/tableau-de-bord'
+    | '/memotrack'
+    | '/memo/$id'
+    | '/api/public/hooks/angelo-cron'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/apps'
+    | '/dashboard'
+    | '/favorites'
+    | '/history'
+    | '/ideas'
+    | '/integrations'
+    | '/settings'
+    | '/team'
+    | '/api/analyze'
+    | '/connexion-odoo'
+    | '/factures'
+    | '/journal'
+    | '/parametres'
+    | '/tableau-de-bord'
+    | '/memotrack'
+    | '/memo/$id'
+    | '/api/public/hooks/angelo-cron'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/_angelo'
+    | '/_authenticated/_memotrack'
+    | '/_authenticated/apps'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/favorites'
+    | '/_authenticated/history'
+    | '/_authenticated/ideas'
+    | '/_authenticated/integrations'
+    | '/_authenticated/settings'
+    | '/_authenticated/team'
+    | '/api/analyze'
+    | '/_authenticated/_angelo/connexion-odoo'
+    | '/_authenticated/_angelo/factures'
+    | '/_authenticated/_angelo/journal'
+    | '/_authenticated/_angelo/parametres'
+    | '/_authenticated/_angelo/tableau-de-bord'
+    | '/_authenticated/_memotrack/memotrack'
+    | '/_authenticated/_memotrack/memo/$id'
+    | '/api/public/hooks/angelo-cron'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ApiAnalyzeRoute: typeof ApiAnalyzeRoute
+  ApiPublicHooksAngeloCronRoute: typeof ApiPublicHooksAngeloCronRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +302,226 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/_angelo': {
+      id: '/_authenticated/_angelo'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedAngeloRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/_memotrack': {
+      id: '/_authenticated/_memotrack'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedMemotrackRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/apps': {
+      id: '/_authenticated/apps'
+      path: '/apps'
+      fullPath: '/apps'
+      preLoaderRoute: typeof AuthenticatedAppsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/favorites': {
+      id: '/_authenticated/favorites'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof AuthenticatedFavoritesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/history': {
+      id: '/_authenticated/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof AuthenticatedHistoryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ideas': {
+      id: '/_authenticated/ideas'
+      path: '/ideas'
+      fullPath: '/ideas'
+      preLoaderRoute: typeof AuthenticatedIdeasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/integrations': {
+      id: '/_authenticated/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof AuthenticatedIntegrationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/team': {
+      id: '/_authenticated/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof AuthenticatedTeamRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/analyze': {
+      id: '/api/analyze'
+      path: '/api/analyze'
+      fullPath: '/api/analyze'
+      preLoaderRoute: typeof ApiAnalyzeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/_angelo/connexion-odoo': {
+      id: '/_authenticated/_angelo/connexion-odoo'
+      path: '/connexion-odoo'
+      fullPath: '/connexion-odoo'
+      preLoaderRoute: typeof AuthenticatedAngeloConnexionOdooRouteImport
+      parentRoute: typeof AuthenticatedAngeloRoute
+    }
+    '/_authenticated/_angelo/factures': {
+      id: '/_authenticated/_angelo/factures'
+      path: '/factures'
+      fullPath: '/factures'
+      preLoaderRoute: typeof AuthenticatedAngeloFacturesRouteImport
+      parentRoute: typeof AuthenticatedAngeloRoute
+    }
+    '/_authenticated/_angelo/journal': {
+      id: '/_authenticated/_angelo/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof AuthenticatedAngeloJournalRouteImport
+      parentRoute: typeof AuthenticatedAngeloRoute
+    }
+    '/_authenticated/_angelo/parametres': {
+      id: '/_authenticated/_angelo/parametres'
+      path: '/parametres'
+      fullPath: '/parametres'
+      preLoaderRoute: typeof AuthenticatedAngeloParametresRouteImport
+      parentRoute: typeof AuthenticatedAngeloRoute
+    }
+    '/_authenticated/_angelo/tableau-de-bord': {
+      id: '/_authenticated/_angelo/tableau-de-bord'
+      path: '/tableau-de-bord'
+      fullPath: '/tableau-de-bord'
+      preLoaderRoute: typeof AuthenticatedAngeloTableauDeBordRouteImport
+      parentRoute: typeof AuthenticatedAngeloRoute
+    }
+    '/_authenticated/_memotrack/memotrack': {
+      id: '/_authenticated/_memotrack/memotrack'
+      path: '/memotrack'
+      fullPath: '/memotrack'
+      preLoaderRoute: typeof AuthenticatedMemotrackMemotrackRouteImport
+      parentRoute: typeof AuthenticatedMemotrackRoute
+    }
+    '/_authenticated/_memotrack/memo/$id': {
+      id: '/_authenticated/_memotrack/memo/$id'
+      path: '/memo/$id'
+      fullPath: '/memo/$id'
+      preLoaderRoute: typeof AuthenticatedMemotrackMemoIdRouteImport
+      parentRoute: typeof AuthenticatedMemotrackRoute
+    }
+    '/api/public/hooks/angelo-cron': {
+      id: '/api/public/hooks/angelo-cron'
+      path: '/api/public/hooks/angelo-cron'
+      fullPath: '/api/public/hooks/angelo-cron'
+      preLoaderRoute: typeof ApiPublicHooksAngeloCronRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthenticatedAngeloRouteChildren {
+  AuthenticatedAngeloConnexionOdooRoute: typeof AuthenticatedAngeloConnexionOdooRoute
+  AuthenticatedAngeloFacturesRoute: typeof AuthenticatedAngeloFacturesRoute
+  AuthenticatedAngeloJournalRoute: typeof AuthenticatedAngeloJournalRoute
+  AuthenticatedAngeloParametresRoute: typeof AuthenticatedAngeloParametresRoute
+  AuthenticatedAngeloTableauDeBordRoute: typeof AuthenticatedAngeloTableauDeBordRoute
+}
+
+const AuthenticatedAngeloRouteChildren: AuthenticatedAngeloRouteChildren = {
+  AuthenticatedAngeloConnexionOdooRoute: AuthenticatedAngeloConnexionOdooRoute,
+  AuthenticatedAngeloFacturesRoute: AuthenticatedAngeloFacturesRoute,
+  AuthenticatedAngeloJournalRoute: AuthenticatedAngeloJournalRoute,
+  AuthenticatedAngeloParametresRoute: AuthenticatedAngeloParametresRoute,
+  AuthenticatedAngeloTableauDeBordRoute: AuthenticatedAngeloTableauDeBordRoute,
+}
+
+const AuthenticatedAngeloRouteWithChildren =
+  AuthenticatedAngeloRoute._addFileChildren(AuthenticatedAngeloRouteChildren)
+
+interface AuthenticatedMemotrackRouteChildren {
+  AuthenticatedMemotrackMemotrackRoute: typeof AuthenticatedMemotrackMemotrackRoute
+  AuthenticatedMemotrackMemoIdRoute: typeof AuthenticatedMemotrackMemoIdRoute
+}
+
+const AuthenticatedMemotrackRouteChildren: AuthenticatedMemotrackRouteChildren =
+  {
+    AuthenticatedMemotrackMemotrackRoute: AuthenticatedMemotrackMemotrackRoute,
+    AuthenticatedMemotrackMemoIdRoute: AuthenticatedMemotrackMemoIdRoute,
+  }
+
+const AuthenticatedMemotrackRouteWithChildren =
+  AuthenticatedMemotrackRoute._addFileChildren(
+    AuthenticatedMemotrackRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAngeloRoute: typeof AuthenticatedAngeloRouteWithChildren
+  AuthenticatedMemotrackRoute: typeof AuthenticatedMemotrackRouteWithChildren
+  AuthenticatedAppsRoute: typeof AuthenticatedAppsRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedFavoritesRoute: typeof AuthenticatedFavoritesRoute
+  AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
+  AuthenticatedIdeasRoute: typeof AuthenticatedIdeasRoute
+  AuthenticatedIntegrationsRoute: typeof AuthenticatedIntegrationsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedTeamRoute: typeof AuthenticatedTeamRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAngeloRoute: AuthenticatedAngeloRouteWithChildren,
+  AuthenticatedMemotrackRoute: AuthenticatedMemotrackRouteWithChildren,
+  AuthenticatedAppsRoute: AuthenticatedAppsRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedFavoritesRoute: AuthenticatedFavoritesRoute,
+  AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
+  AuthenticatedIdeasRoute: AuthenticatedIdeasRoute,
+  AuthenticatedIntegrationsRoute: AuthenticatedIntegrationsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedTeamRoute: AuthenticatedTeamRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ApiAnalyzeRoute: ApiAnalyzeRoute,
+  ApiPublicHooksAngeloCronRoute: ApiPublicHooksAngeloCronRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

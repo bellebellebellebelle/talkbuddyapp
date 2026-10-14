@@ -1,0 +1,4 @@
+import { queryOptions } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+export const labQuery = queryOptions({queryKey:['laboratory'],queryFn:async()=>{const [ideas,activity]=await Promise.all([supabase.from('ideas').select('*').order('created_at',{ascending:false}),supabase.from('lab_activity').select('*').order('created_at',{ascending:false}).limit(1000)]);if(ideas.error)throw ideas.error;if(activity.error)throw activity.error;return {ideas:ideas.data,activity:activity.data};}});
+export const applications=[{key:'memotrack',name:'MemoTrack',description:'Transformez vos enregistrements de réunion en mémos clairs et suivez leur efficacité.',tone:'cyan',icon:'memotrack',to:'/memotrack'},{key:'angelo',name:'ANGELO Billing',description:'Connectez Odoo, détectez les factures impayées et relancez vos clients automatiquement.',tone:'amber',icon:'angelo',to:'/tableau-de-bord'}] as const;
