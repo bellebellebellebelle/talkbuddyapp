@@ -100,7 +100,7 @@ function wrap<TArgs extends z.ZodTypeAny>(
           const result = await fn(args as any);
           const url = verificationUrl(name, result);
           await logAction(userId, name, args, summarize(result), "success", source, {
-            taskId: preferences.taskId,
+            ...(preferences.taskId ? { taskId: preferences.taskId } : {}),
             attempt,
             verificationUrl: url,
           });
@@ -113,7 +113,7 @@ function wrap<TArgs extends z.ZodTypeAny>(
         } catch (e: any) {
           const msg = e?.message ?? String(e);
           await logAction(userId, name, args, { error: msg }, "error", source, {
-            taskId: preferences.taskId,
+            ...(preferences.taskId ? { taskId: preferences.taskId } : {}),
             attempt,
             errorDetail: `Tentative ${attempt}: ${msg}`,
           });
@@ -213,7 +213,7 @@ export function buildAllTools(userId: string, source: Source = "web", preference
       "Envoie un email immédiatement.",
       z.object({ to: z.string(), cc: z.string().optional(), bcc: z.string().optional(), subject: z.string(), body: z.string() }),
       async (a) => {
-        const raw = encodeRawEmail({ ...a, body: personalizeEmail(a.body, preferences) });
+        const { cc, bcc, ...rest } = a; const raw = encodeRawEmail({ ...rest, ...(cc ? { cc } : {}), ...(bcc ? { bcc } : {}), body: personalizeEmail(a.body, preferences) });
         return gmailFetch(u, "/users/me/messages/send", { method: "POST", body: JSON.stringify({ raw }) });
       },
     ),
@@ -225,8 +225,8 @@ export function buildAllTools(userId: string, source: Source = "web", preference
         const orig = await gmailFetch(u, `/users/me/messages/${messageId}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Message-ID`);
         const headers: Record<string, string> = {};
         for (const h of orig.payload?.headers ?? []) headers[h.name.toLowerCase()] = h.value;
-        const subject = headers.subject?.startsWith("Re:") ? headers.subject : `Re: ${headers.subject ?? ""}`;
-         const raw = encodeRawEmail({ to: headers.from ?? "", subject, body: personalizeEmail(body, preferences) });
+        const subject = headers['subject']?.startsWith("Re:") ? headers['subject'] : `Re: ${headers['subject'] ?? ""}`;
+         const raw = encodeRawEmail({ to: headers['from'] ?? "", subject, body: personalizeEmail(body, preferences) });
         return gmailFetch(u, "/users/me/messages/send", { method: "POST", body: JSON.stringify({ raw, threadId: orig.threadId }) });
       },
     ),
@@ -235,7 +235,7 @@ export function buildAllTools(userId: string, source: Source = "web", preference
       "Crée un brouillon (ne l'envoie pas).",
       z.object({ to: z.string(), cc: z.string().optional(), subject: z.string(), body: z.string() }),
       async (a) => {
-        const raw = encodeRawEmail({ ...a, body: personalizeEmail(a.body, preferences) });
+        const { cc, bcc, ...rest } = a; const raw = encodeRawEmail({ ...rest, ...(cc ? { cc } : {}), ...(bcc ? { bcc } : {}), body: personalizeEmail(a.body, preferences) });
         return gmailFetch(u, "/users/me/drafts", { method: "POST", body: JSON.stringify({ message: { raw } }) });
       },
     ),

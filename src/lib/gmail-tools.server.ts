@@ -69,7 +69,7 @@ export function buildGmailTools(userId: string) {
         body: z.string(),
       }),
       execute: async ({ to, cc, subject, body }) => {
-        const raw = encodeRawEmail({ to, cc, subject, body });
+        const raw = encodeRawEmail({ to, ...(cc ? { cc } : {}), subject, body });
         const data = await gmailFetch(userId, "/users/me/messages/send", {
           method: "POST",
           body: JSON.stringify({ raw }),
@@ -87,8 +87,8 @@ export function buildGmailTools(userId: string) {
         const original = await gmailFetch(userId, `/users/me/messages/${messageId}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Message-ID`);
         const headers: Record<string, string> = {};
         for (const h of original.payload?.headers ?? []) headers[h.name.toLowerCase()] = h.value;
-        const subject = headers.subject?.startsWith("Re:") ? headers.subject : `Re: ${headers.subject ?? ""}`;
-        const raw = encodeRawEmail({ to: headers.from ?? "", subject, body });
+        const subject = headers['subject']?.startsWith("Re:") ? headers['subject'] : `Re: ${headers['subject'] ?? ""}`;
+        const raw = encodeRawEmail({ to: headers['from'] ?? "", subject, body });
         const data = await gmailFetch(userId, "/users/me/messages/send", {
           method: "POST",
           body: JSON.stringify({ raw, threadId: original.threadId }),
@@ -105,7 +105,7 @@ export function buildGmailTools(userId: string) {
         body: z.string(),
       }),
       execute: async ({ to, cc, subject, body }) => {
-        const raw = encodeRawEmail({ to, cc, subject, body });
+        const raw = encodeRawEmail({ to, ...(cc ? { cc } : {}), subject, body });
         const data = await gmailFetch(userId, "/users/me/drafts", {
           method: "POST",
           body: JSON.stringify({ message: { raw } }),

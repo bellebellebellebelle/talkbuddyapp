@@ -83,7 +83,7 @@ export async function transcribeGoogleChatAttachment(userId: string, attachment:
   return retry(async (attempt) => {
     const form = new FormData();
     form.append("model", "openai/gpt-4o-mini-transcribe");
-    form.append("file", new File([media.bytes], `message-vocal.${extensionForMime(mime)}`, { type: mime }));
+    form.append("file", new File([media.bytes], `message-vocal.${extensionForMime(mime)}`, { type: mime || undefined }));
     if (attempt === 1) form.append("prompt", "Transcris fidèlement en français, sans traduire ni inventer.");
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/audio/transcriptions", {

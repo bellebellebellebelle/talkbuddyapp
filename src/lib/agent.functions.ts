@@ -11,7 +11,7 @@ export const askAgent = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { generateText, stepCountIs } = await import("ai");
 
-    const key = process.env.LOVABLE_API_KEY!;
+    const key = process.env['LOVABLE_API_KEY']!;
     const gateway = createLovableAiGatewayProvider(key);
 
     const { data: gcreds } = await supabaseAdmin
@@ -28,9 +28,9 @@ export const askAgent = createServerFn({ method: "POST" })
     const model = settings?.ai_model ?? "google/gemini-3-flash-preview";
     const tools = gcreds ? buildAllTools(context.userId, data.source ?? "web", {
       timezone,
-      emailGreeting: settings?.email_greeting,
-      emailSignature: settings?.email_signature,
-      emailTone: settings?.email_tone,
+      ...(settings?.email_greeting ? { emailGreeting: settings.email_greeting } : {}),
+      ...(settings?.email_signature ? { emailSignature: settings.email_signature } : {}),
+      ...(settings?.email_tone ? { emailTone: settings.email_tone } : {}),
       taskId: crypto.randomUUID(),
     }) : undefined;
 
@@ -38,7 +38,7 @@ export const askAgent = createServerFn({ method: "POST" })
       model: gateway(model),
       system: `Tu es OCKTAVUS, agent IA autonome Google Workspace. Exécute la demande en utilisant les outils. Fuseau obligatoire: ${timezone}. Date/heure locale actuelle exacte: ${new Date().toLocaleString("fr-FR", { timeZone: timezone, dateStyle: "full", timeStyle: "long" })}. Pour Agenda, résous demain/semaine prochaine en date locale et fournis YYYY-MM-DDTHH:mm:ss sans Z ni décalage; l'outil applique le fuseau. Pour les e-mails, respecte un ton ${settings?.email_tone ?? "professionnel"}. Termine par un résumé très court et tout lien verificationUrl retourné par les outils. Français.`,
       prompt: data.prompt,
-      tools,
+      ...(tools ? { tools } : {}),
       stopWhen: stepCountIs(50),
       providerOptions: model.startsWith("openai/gpt-5.6-") ? { lovable: { reasoningEffort: "none" } } : undefined,
     });

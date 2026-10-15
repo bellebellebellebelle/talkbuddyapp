@@ -39,13 +39,17 @@ export const askAssistant = createServerFn({ method: "POST" })
       .from("messages")
       .insert({ user_id: userId, role: "assistant", content: reply, board: board as never });
     if (e2) throw new Error(e2.message);
-    let audio: string | null = null;
-    try {
-      audio = await speak(reply);
-    } catch (e) {
-      console.error(e);
-    }
-    return { reply, board, audio, open };
+    return { reply, board, open };
+  });
+
+// Text and completed actions reach the user before voice synthesis finishes.
+export const assistantSpeech = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { text: string }) => ({ text: String(data.text || "").trim().slice(0, 8000) }))
+  .handler(async ({ data }) => {
+    if (!data.text) return { audio: null };
+    try { return { audio: await speak(data.text) }; }
+    catch { return { audio: null }; }
   });
 
 export const saveOdoo = createServerFn({ method: "POST" })

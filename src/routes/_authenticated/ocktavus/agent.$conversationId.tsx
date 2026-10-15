@@ -38,7 +38,7 @@ function AgentWindow({ conversationId, initial }: { conversationId: string; init
     prepareSendMessagesRequest: async ({ messages, body }) => {
       const { data: { session } } = await supabase.auth.getSession();
       const headers: Record<string, string> = {};
-      if (session?.access_token) headers.Authorization = `Bearer ${session.access_token}`;
+      if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`;
       return {
         body: { ...body, messages, threadId: conversationId, surface: "agent" },
         headers,

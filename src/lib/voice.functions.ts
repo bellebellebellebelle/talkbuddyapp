@@ -9,7 +9,7 @@ export const transcribeAudio = createServerFn({ method: "POST" })
     return data;
   })
   .handler(async ({ data }) => {
-    const apiKey = process.env.LOVABLE_API_KEY;
+    const apiKey = process.env['LOVABLE_API_KEY'];
     if (!apiKey) throw new Error("LOVABLE_API_KEY manquant");
 
     const audio = data.get("audio");
@@ -17,7 +17,7 @@ export const transcribeAudio = createServerFn({ method: "POST" })
 
     const upstream = new FormData();
     const mime = audio.type.split(";")[0];
-    const ext = ({ "audio/webm": "webm", "audio/mp4": "mp4", "audio/mpeg": "mp3", "audio/wav": "wav", "audio/ogg": "ogg" } as Record<string, string>)[mime] ?? "webm";
+    const ext = ({ "audio/webm": "webm", "audio/mp4": "mp4", "audio/mpeg": "mp3", "audio/wav": "wav", "audio/ogg": "ogg" } as Record<string, string>)[mime ?? "audio/webm"] ?? "webm";
     upstream.append("model", "openai/gpt-4o-mini-transcribe");
     upstream.append("file", audio, `recording.${ext}`);
 
