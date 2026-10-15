@@ -7,7 +7,6 @@ import "@fontsource/inter/600.css";
 import { createFileRoute, Outlet, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { VoiceOrb } from "@/components/VoiceOrb";
 import {
   Sparkles,
   LayoutDashboard,
@@ -135,7 +134,6 @@ function AuthedLayout() {
 
       <main className="relative flex-1 overflow-hidden">
         <Outlet />
-        <VoiceOrb />
       </main>
     </div>
   );

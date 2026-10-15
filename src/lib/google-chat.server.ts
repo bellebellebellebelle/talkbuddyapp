@@ -77,13 +77,13 @@ export async function transcribeGoogleChatAttachment(userId: string, attachment:
   }
 
   if (!media) throw new Error("La pièce jointe audio ne contient aucune référence téléchargeable");
-  mime = media.mime || mime;
+  mime = media.mime || mime || "";
   if (!/^audio\//i.test(mime)) throw new Error(`La pièce jointe reçue n'est pas reconnue comme audio (${mime || "type inconnu"})`);
 
   return retry(async (attempt) => {
     const form = new FormData();
     form.append("model", "openai/gpt-4o-mini-transcribe");
-    form.append("file", new File([media.bytes], `message-vocal.${extensionForMime(mime)}`, { type: mime }));
+    form.append("file", new File([media.bytes], `message-vocal.${extensionForMime(mime)}`, { type: mime || undefined }));
     if (attempt === 1) form.append("prompt", "Transcris fidèlement en français, sans traduire ni inventer.");
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/audio/transcriptions", {

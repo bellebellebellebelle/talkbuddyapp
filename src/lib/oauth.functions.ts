@@ -36,7 +36,7 @@ export const generateChatLinkCode = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const n = crypto.getRandomValues(new Uint32Array(1))[0] % 900000;
+    const n = (crypto.getRandomValues(new Uint32Array(1))[0] ?? 0) % 900000;
     const code = (100000 + n).toString();
     await supabaseAdmin.from("chat_link_codes").delete().eq("user_id", context.userId);
     const { error } = await supabaseAdmin.from("chat_link_codes").insert({ code, user_id: context.userId });

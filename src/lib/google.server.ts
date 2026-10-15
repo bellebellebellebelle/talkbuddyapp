@@ -37,8 +37,8 @@ export const GOOGLE_SCOPES = [
 ];
 
 export function getGoogleOAuthConfig(origin: string) {
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const clientId = process.env['GOOGLE_CLIENT_ID'];
+  const clientSecret = process.env['GOOGLE_CLIENT_SECRET'];
   if (!clientId || !clientSecret) throw new Error("GOOGLE_CLIENT_ID/SECRET manquant");
   return { clientId, clientSecret, redirectUri: `${origin}/api/public/google/callback` };
 }
@@ -90,8 +90,8 @@ export async function fetchGoogleUserInfo(accessToken: string) {
 }
 
 export async function refreshGoogleToken(refreshToken: string) {
-  const clientId = process.env.GOOGLE_CLIENT_ID!;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET!;
+  const clientId = process.env['GOOGLE_CLIENT_ID']!;
+  const clientSecret = process.env['GOOGLE_CLIENT_SECRET']!;
   const res = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -187,7 +187,7 @@ export function encodeRawEmail(opts: {
 
 // ---- Signed OAuth state (prevents attaching a Google account to someone else's user) ----
 async function hmacKey() {
-  const secret = process.env.GOOGLE_CLIENT_SECRET;
+  const secret = process.env['GOOGLE_CLIENT_SECRET'];
   if (!secret) throw new Error("GOOGLE_CLIENT_SECRET manquant");
   return crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign", "verify"]);
 }

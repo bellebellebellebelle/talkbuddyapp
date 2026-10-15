@@ -10,7 +10,7 @@ export const Route = createFileRoute("/_authenticated/ocktavus/drive")({ compone
 function DrivePage() {
   const [q, setQ] = useState("");
   const list = useServerFn(wsDriveList);
-  const files = useQuery({ queryKey: ["drive", q], queryFn: () => list({ data: { query: q || undefined, max: 50 } }) });
+  const files = useQuery({ queryKey: ["drive", q], queryFn: () => list({ data: { ...(q ? { query: q } : {}), max: 50 } }) });
 
   return (
     <div className="h-full overflow-y-auto p-8">

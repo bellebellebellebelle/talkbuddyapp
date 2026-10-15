@@ -13,3 +13,6 @@
 - Aura drives the IDEALAB lab by returning a lab page path that the Aura screen shows in a same-origin iframe; app actions run server-side through the registry in src/lib/assistant-apps.server.ts, so new apps only add registry actions.
 - Lab apps share Aura's single Odoo connection row (column `db`, aliased to `db_name` in lab code) so users enter Odoo credentials once.
 - Lab styles are scoped under `.lab-theme` so they never restyle Aura's screen.
+- Embedded laboratory pages delegate voice to the parent Aura; standalone lab pages host the same Aura screen in a voice iframe, so all voice actions use one registry.
+- Task panel geometry is managed by native pointer events and a validated localStorage preference, avoiding additional UI dependencies.
+- Assistant text/actions return before a separate authenticated speech request, so voice synthesis never delays task feedback.

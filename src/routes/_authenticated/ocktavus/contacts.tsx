@@ -12,7 +12,7 @@ function ContactsPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const list = useServerFn(wsContacts);
   const detailFn = useServerFn(wsContactDetail);
-  const data = useQuery({ queryKey: ["contacts", q], queryFn: () => list({ data: { query: q || undefined } }) });
+  const data = useQuery({ queryKey: ["contacts", q], queryFn: () => list({ data: { ...(q ? { query: q } : {}) } }) });
   const detail = useQuery({
     queryKey: ["contact-detail", selected],
     queryFn: () => detailFn({ data: { resourceName: selected! } }),
