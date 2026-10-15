@@ -77,7 +77,7 @@ export async function transcribeGoogleChatAttachment(userId: string, attachment:
   }
 
   if (!media) throw new Error("La pièce jointe audio ne contient aucune référence téléchargeable");
-  mime = media.mime || mime;
+  mime = media.mime || mime || "";
   if (!/^audio\//i.test(mime)) throw new Error(`La pièce jointe reçue n'est pas reconnue comme audio (${mime || "type inconnu"})`);
 
   return retry(async (attempt) => {
