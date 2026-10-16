@@ -113,6 +113,7 @@ function Assistant({ userId, compact = false }: { userId: string; compact?: bool
     const message = (event: MessageEvent) => {
       if (event.origin !== window.location.origin || event.source !== document.querySelector("iframe[title=\"Laboratoire IDEALAB\"]")?.contentWindow) return;
       if (event.data?.type === "aura-talk") void toggle();
+      else if (event.data?.type === "aura-ask" && typeof event.data.text === "string" && state !== "thinking") void handle(event.data.text.slice(0, 2000));
     };
     document.addEventListener("dblclick", enter); window.addEventListener("message", message);
     return () => { document.removeEventListener("dblclick", enter); window.removeEventListener("message", message); };
