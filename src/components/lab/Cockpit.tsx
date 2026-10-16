@@ -119,7 +119,7 @@ export function Cockpit({ activity, ideasCount }: { activity: Activity[]; ideasC
         <Link to="/factures" onClick={() => track('angelo')} className="ck-q tone-violet"><ReceiptEuro /><span><b>Voir les factures</b><small>ANGELO</small></span></Link>
         <Link to="/ocktavus/agent" onClick={() => track('ocktavus')} className="ck-q tone-blue"><Bot /><span><b>Parler à Ocktavus</b><small>Agent Google</small></span></Link>
         <Link to="/ideas" className="ck-q tone-amber"><Lightbulb /><span><b>Mes idées</b><small>{ideasCount} enregistrée{ideasCount > 1 ? 's' : ''}</small></span></Link>
-        <Link to="/settings" className="ck-q tone-green"><Settings /><span><b>Paramètres</b><small>Connexions</small></span></Link>
+        <Link to="/settings" search={{ tab: undefined }} className="ck-q tone-green"><Settings /><span><b>Paramètres</b><small>Connexions</small></span></Link>
       </div>
     </section>
   </div>;
