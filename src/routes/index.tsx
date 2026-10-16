@@ -111,7 +111,7 @@ function Assistant({ userId, compact = false }: { userId: string; compact?: bool
       setLab(current => current ?? { path: "/dashboard", v: 0 });
     };
     const message = (event: MessageEvent) => {
-      if (event.origin !== window.location.origin || event.source !== document.querySelector("iframe[title=\"Laboratoire IDEALAB\"]")?.contentWindow) return;
+      if (event.origin !== window.location.origin || event.source !== document.querySelector<HTMLIFrameElement>("iframe[title=\"Laboratoire IDEALAB\"]")?.contentWindow) return;
       if (event.data?.type === "aura-talk") void toggle();
       else if (event.data?.type === "aura-ask" && typeof event.data.text === "string" && state !== "thinking") void handle(event.data.text.slice(0, 2000));
     };
