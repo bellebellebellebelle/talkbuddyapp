@@ -1,4 +1,8 @@
 # Interface update
+- [ ] Read PDF, PNG and MP3 attachments in Aura and reuse them with voice-driven app actions.
+- [ ] Add on-demand web search with real sources.
+- [ ] Stack navigation, voice and exit luminous points; clear finished voice captions; remove laboratory top strip.
+- [ ] Refine premium bento accents without additional UI libraries.
 - [ ] Add subtle Tiffany accents and reduce costly laboratory visual effects.
 - [ ] Fullscreen laboratory with shared floating Aura voice access and background double-click entry.
 - [ ] Persist movable, resizable task messages.
