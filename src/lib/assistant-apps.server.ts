@@ -2,12 +2,13 @@ import { z } from "zod";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { applications } from "./laboratory";
 import { buildAllTools } from "./google-tools.server";
+import type { AuraAttachment } from "./aura-attachments";
 
 // Names + descriptions of every Google Workspace tool (Gmail, Agenda, Drive, Docs, Sheets, Slides, Forms, Tâches, Contacts, Blogger).
 const googleToolCatalog = Object.entries(buildAllTools("00000000-0000-0000-0000-000000000000", "voice")).map(([name, t]) => ({ name, description: (t as { description?: string }).description ?? "" }));
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-type Ctx = { db: SupabaseClient<any, "public", any>; userId: string };
+type Ctx = { db: SupabaseClient<any, "public", any>; userId: string; attachments?: AuraAttachment[] };
 type Action = { description: string; input: z.ZodObject<any>; run: (ctx: Ctx, input: any) => Promise<unknown> };
 
 /**
@@ -17,6 +18,20 @@ type Action = { description: string; input: z.ZodObject<any>; run: (ctx: Ctx, in
  */
 const appActions: Record<string, Record<string, Action>> = {
   ocktavus: {
+    joindre_fichier: {
+      description: "Importer le fichier original joint à Aura dans Google Drive. attachment_index est l'index de la pièce jointe ; folder_id est le dossier cible facultatif.",
+      input: z.object({ attachment_index: z.number().int().min(0), folder_id: z.string().optional() }),
+      run: async ({ userId, attachments }, i) => {
+        const file = attachments?.[i.attachment_index];
+        if (!file) throw new Error("Pièce jointe introuvable.");
+        const { googleFetch } = await import("./google.server");
+        const metadata = { name: file.name, ...(i.folder_id ? { parents: [i.folder_id] } : {}) };
+        const boundary = `aura_${crypto.randomUUID()}`;
+        const binary = Uint8Array.from(atob(file.data), c => c.charCodeAt(0));
+        const body = new Blob([`--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(metadata)}\r\n--${boundary}\r\nContent-Type: ${file.mime}\r\n\r\n`, binary, `\r\n--${boundary}--`]);
+        return googleFetch(userId, "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,webViewLink", { method: "POST", headers: { "Content-Type": `multipart/related; boundary=${boundary}` }, body });
+      },
+    },
     outils_google: {
       description: "Lister tous les outils Google Workspace disponibles (nom, description). À appeler avant executer_google si tu ne connais pas le nom exact ou les paramètres.",
       input: z.object({}),
@@ -68,6 +83,15 @@ const appActions: Record<string, Record<string, Action>> = {
     },
   },
   memotrack: {
+    creer_memo: {
+      description: "Enregistrer un mémo MemoTrack à partir du contenu réellement lu dans une pièce jointe (PDF, PNG ou MP3). Fournir le contenu extrait, résumé, décisions et actions sans inventer de scores.",
+      input: z.object({ title: z.string(), transcript: z.string().min(1), summary: z.string(), decisions: z.array(z.string()), actions: z.array(z.object({ task: z.string(), owner: z.string().optional(), deadline: z.string().optional() })) }),
+      run: async ({ db, userId }, i) => {
+        const { data, error } = await db.from("meetings").insert({ user_id: userId, title: i.title.slice(0, 160), transcript: i.transcript, summary: i.summary, decisions: i.decisions, actions: i.actions }).select("id,title,summary").single();
+        if (error) throw new Error(error.message);
+        return data;
+      },
+    },
     lister_reunions: {
       description: "Lister les mémos de réunion récents avec résumé et scores.",
       input: z.object({}),
@@ -88,6 +112,19 @@ const appActions: Record<string, Record<string, Action>> = {
     },
   },
   angelo: {
+    joindre_fichier: {
+      description: "Joindre le fichier original fourni à Aura à une facture Odoo existante. attachment_index = index du fichier, odoo_id = id de facture vérifié.",
+      input: z.object({ attachment_index: z.number().int().min(0), odoo_id: z.number().int().positive() }),
+      run: async ({ db, userId, attachments }, i) => {
+        const file = attachments?.[i.attachment_index];
+        if (!file) throw new Error("Pièce jointe introuvable.");
+        const engine = await import("./angelo-engine.server");
+        const { odooAuthenticate, odooExecute } = await import("./odoo.server");
+        const creds = await engine.loadConnection(db, userId);
+        const uid = await odooAuthenticate(creds);
+        return odooExecute(creds, uid, "ir.attachment", "create", [{ name: file.name, datas: file.data, mimetype: file.mime, res_model: "account.move", res_id: i.odoo_id }]);
+      },
+    },
     lister_impayes: {
       description: "Lister les factures impayées en cache (montant, client, échéance, relances).",
       input: z.object({}),

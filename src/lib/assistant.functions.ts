@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { odooAuth, runAgent, speak, transcribe } from "./assistant.server";
+import { validateAttachments, type AuraAttachment } from "./aura-attachments";
 
 export const transcribeAudio = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -12,10 +13,10 @@ export const transcribeAudio = createServerFn({ method: "POST" })
 
 export const askAssistant = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { text: string }) => {
+  .inputValidator((d: { text: string; attachments?: AuraAttachment[] }) => {
     const text = String(d?.text || "").trim().slice(0, 4000);
     if (!text) throw new Error("Message vide");
-    return { text };
+    return { text, attachments: validateAttachments(d.attachments) };
   })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
@@ -30,11 +31,11 @@ export const askAssistant = createServerFn({ method: "POST" })
     const { reply, board, open } = await runAgent(history, odoo ?? null, {
       summary: appsSummary(),
       run: async (app, action, input) => {
-        const r = await runAppAction({ db: supabase as never, userId }, app, action, input);
+        const r = await runAppAction({ db: supabase as never, userId, attachments: data.attachments }, app, action, input);
         await supabase.from("lab_activity").insert({ user_id: userId, kind: `aura:${app}.${action}`, app_key: app === "lab" ? null : app });
         return r;
       },
-    });
+    }, data.attachments);
     const { error: e2 } = await supabase
       .from("messages")
       .insert({ user_id: userId, role: "assistant", content: reply, board: board as never });
